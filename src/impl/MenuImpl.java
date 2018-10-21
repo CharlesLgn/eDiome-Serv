@@ -17,17 +17,18 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     }
 
     @Override
-    public void createNewServer() throws RemoteException {
+    public int createNewServer() throws RemoteException {
         try {
             int port = 8000;
-            LocateRegistry.createRegistry(port);
+            //LocateRegistry.createRegistry(port);
 
             Naming.rebind("rmi://localhost:"+port+"/serv"+numServ, new ServerImpl());
-            numServ++;
+            return numServ++;
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println("echec : " + e);
         }
+        return -1;
     }
 
     @Override
