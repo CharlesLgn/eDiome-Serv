@@ -4,4 +4,4 @@
 <span style="color:blue; font-family:Georgia;">CUOCO Lucas</span>,
 <span style="color:blue; font-family:Georgia;">LIGONY Charles</span>,
 <span style="color:blue; font-family:Georgia;">NOEL Loic</span> et
-<span style="color:blue; font-family:Georgia;"></span>
+<span style="color:blue; font-family:Georgia;">WELSCH Nicolas</span>
