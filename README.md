@@ -4,7 +4,7 @@ Project made by
     <span style="color:blue; font-family:Georgia;">CUOCO Lucas</span>,
     <span style="color:blue; font-family:Georgia;">LIGONY Charles</span>,
     <span style="color:blue; font-family:Georgia;">NOEL Loic</span> and
-    <span style="color:blue; font-family:Georgia;"></span> as part of the <b>project management</b>
+    <span style="color:blue; font-family:Georgia;">WELSCH Nicolas</span> as part of the <b>project management</b>
 ## project description
 An IRC is a online chat, which made a group able to discuss with each other by text, image, document or voice.
 the goal of the project is :
