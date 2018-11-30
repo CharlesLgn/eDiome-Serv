@@ -17,6 +17,8 @@ the goal of the project is :
  - create text channel
  - create voice channel (**Nice To Have**)
  
+ more in the trello [here](https://trello.com/b/AjUTBUOB)
+ 
  the end of the project is in 3 months
  
  ##
