@@ -21,4 +21,18 @@ the goal of the project is :
  
  the end of the project is in 3 months
  
- ##
+ ## Guide Line
+When you work, you have to work aon a branch which will be `user_activity`
+ 
+For instance, if your name is **Henry Podebeur** you work on the **creation of VOIP** your branch name will be `podebeur_creation_voip`
+ 
+When you commit, you have to folow this form : `[type_commit] description`
+ 
+ There are **three** type of commit :
+  - **\[feat]**     : new fonctionnality
+  - **\[fix]**      : bug correction
+  - **\[refacto]**  : code quality
+  
+ For instance, if you have **corrected a bug** which hapen when you **send messages** you can write : `[fix] message send`
+ 
+ If your next commit is on the same task let's do : `git commit --amend --no-edit`
