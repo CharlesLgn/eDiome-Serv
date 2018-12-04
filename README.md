@@ -29,10 +29,10 @@ For instance, if your name is **Henry Podebeur** you work on the **creation of V
 When you commit, you have to folow this form : `[type_commit] description`
  
  There are **three** type of commit :
-  - **\[feat]**     : new fonctionnality
-  - **\[fix]**      : bug correction
-  - **\[refacto]**  : code quality
-  - **\[test]**     : UT or IT test
+  - **\[feat]**    : new fonctionnality
+  - **\[fix]**     : bug correction
+  - **\[refacto]** : code quality
+  - **\[test]**    : UT or IT test
   
  For instance, if you have **corrected a bug** which hapen when you **send messages** you can write : `[fix] message send`
  
