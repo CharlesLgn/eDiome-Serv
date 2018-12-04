@@ -32,7 +32,7 @@ When you commit, you have to folow this form : `[type_commit] description`
   - **\[feat]**     : new fonctionnality
   - **\[fix]**      : bug correction
   - **\[refacto]**  : code quality
-  - **\[test]**     : UT or IT test
+  - **\[test]** : UT or IT test
   
  For instance, if you have **corrected a bug** which hapen when you **send messages** you can write : `[fix] message send`
  
