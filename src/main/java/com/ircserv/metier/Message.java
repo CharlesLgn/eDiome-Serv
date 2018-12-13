@@ -1,4 +1,4 @@
-package metier;
+package com.ircserv.metier;
 
 import java.io.Serializable;
 import java.time.LocalDate;

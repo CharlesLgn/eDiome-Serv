@@ -1,4 +1,4 @@
-package inter;
+package com.ircserv.inter;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

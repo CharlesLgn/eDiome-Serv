@@ -1,4 +1,4 @@
-# Internet Relay Chat Server Side
+# Internet Relay Chat main.java.com.ircserv.Server Side
 Project made by
     <span style="color:blue; font-family:Georgia;">CHALLOUATTE Cyril</span>
     <span style="color:blue; font-family:Georgia;">CUOCO Lucas</span>,

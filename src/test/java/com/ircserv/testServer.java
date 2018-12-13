@@ -1,8 +1,8 @@
-package test;
+package com.ircserv;
 
-import contstante.Constante;
-import inter.ServerInterface;
-import metier.Message;
+import com.ircserv.contstante.Constante;
+import com.ircserv.inter.ServerInterface;
+import com.ircserv.metier.Message;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;

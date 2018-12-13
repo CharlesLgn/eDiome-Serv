@@ -1,7 +1,7 @@
-package impl;
+package com.ircserv.impl;
 
-import contstante.Constante;
-import inter.MenuInterface;
+import com.ircserv.contstante.Constante;
+import com.ircserv.inter.MenuInterface;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;

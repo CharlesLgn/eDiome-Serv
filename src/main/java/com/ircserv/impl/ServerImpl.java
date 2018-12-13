@@ -1,14 +1,13 @@
-package impl;
+package com.ircserv.impl;
 
-import inter.ServerInterface;
-import metier.Message;
+import com.ircserv.inter.ServerInterface;
+import com.ircserv.metier.Message;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 

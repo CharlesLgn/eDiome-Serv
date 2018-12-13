@@ -1,6 +1,6 @@
-package inter;
+package com.ircserv.inter;
 
-import metier.Message;
+import com.ircserv.metier.Message;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

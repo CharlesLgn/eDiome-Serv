@@ -1,8 +1,7 @@
-package test;
+package com.ircserv;
 
-import contstante.Constante;
-import inter.MenuInterface;
-import inter.ServerInterface;
+import com.ircserv.contstante.Constante;
+import com.ircserv.inter.MenuInterface;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -17,12 +16,14 @@ public class testMenu {
         MenuInterface obj;
         try {
             obj = (MenuInterface) Naming.lookup("//"+Constante.IP+":" + port + "/menu");
-            int x = obj.createNewServer();
-            System.out.println(x);
-            if (x == -1){
-                System.out.println("désolé, votre server n'a pas pu ce créer");
-            } else {
-               System.out.println("numéro du server : " + x);
+            for (int i = 0 ; i < 5 ; i++){
+                int x = obj.createNewServer();
+                System.out.println(x);
+                if (x == -1){
+                    System.out.println("désolé, votre server n'a pas pu ce créer");
+                } else {
+                    System.out.println("numéro du server : " + x);
+                }
             }
 
         } catch (MalformedURLException | RemoteException | NotBoundException e) {
