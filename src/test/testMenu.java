@@ -1,5 +1,6 @@
 package test;
 
+import contstante.Constante;
 import inter.MenuInterface;
 import inter.ServerInterface;
 
@@ -11,10 +12,11 @@ import java.rmi.RemoteException;
 public class testMenu {
 
     public static void main(String[] args){
-        int port = 8000;
+        System.setProperty("java.rmi.server.hostname",Constante.IP);
+        int port = Constante.PORT;
         MenuInterface obj;
         try {
-            obj = (MenuInterface) Naming.lookup("rmi://localhost:" + port + "/menu");
+            obj = (MenuInterface) Naming.lookup("//"+Constante.IP+":" + port + "/menu");
             int x = obj.createNewServer();
             System.out.println(x);
             if (x == -1){

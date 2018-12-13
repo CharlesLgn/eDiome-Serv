@@ -1,5 +1,6 @@
 package test;
 
+import contstante.Constante;
 import inter.ServerInterface;
 import metier.Message;
 
@@ -11,10 +12,10 @@ import java.util.ArrayList;
 
 public class testServer {
     public static void main(String[] args){
-        int port = 8000;
+        int port = Constante.PORT;
         ServerInterface obj;
         try {
-            obj = (ServerInterface) Naming.lookup("rmi://localhost:" + port + "/serv0");
+            obj = (ServerInterface) Naming.lookup("//"+ Constante.IP+":" + port + "/serv0");
             ArrayList<Message> messages = obj.getMessages();
             System.out.println(messages);
             int x = obj.getMessages().size()+1;
