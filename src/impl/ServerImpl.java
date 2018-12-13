@@ -14,8 +14,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
     private ArrayList<Message> message;
 
-    public ServerImpl() throws RemoteException {
-        super();
+    public ServerImpl(int port) throws RemoteException {
+        super(port);
         message = new ArrayList<>(Arrays.asList(new Message("toto", LocalDate.now(), "tes1"),
                                                 new Message("toto", LocalDate.now(), "tes2")));
     }
