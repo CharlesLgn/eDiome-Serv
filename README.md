@@ -6,13 +6,12 @@
 [![Sprint 3](https://img.shields.io/badge/eDiome-Sprint%203-brightgreen.svg)](https://trello.com/b/C4NDcPDr/ediome-sprint-3)
 [![Sprint 4](https://img.shields.io/badge/eDiome-Sprint%204-brightgreen.svg)](https://trello.com/b/ZWyKmlNV/ediome-sprint-4-final)
 
-# Internet Relay Chat main.java.com.ircserv.Server Side
+# Internet Relay Chat (Server Side)
 Project made by
     <span style="color:blue; font-family:Georgia;">CHALLOUATTE Cyril</span>
     <span style="color:blue; font-family:Georgia;">CUOCO Lucas</span>,
-    <span style="color:blue; font-family:Georgia;">LIGONY Charles</span>,
-    <span style="color:blue; font-family:Georgia;">NOEL Loic</span> and
-    <span style="color:blue; font-family:Georgia;">WELSCH Nicolas</span> as part of the <b>project management</b>
+    <span style="color:blue; font-family:Georgia;">LIGONY Charles</span> and
+    <span style="color:blue; font-family:Georgia;">NOEL Loic</span> as part of the <b>project management</b>
 ## project description
 An IRC is a online chat, which made a group able to discuss with each other by text, image, document or voice.
 the goal of the project is :
