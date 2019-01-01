@@ -6,11 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-<<<<<<< HEAD
         <module name="irc-serv" />
-=======
-        <module name="artifactid" />
->>>>>>> 6bb1840910efcc4b2f2d1b47f8e50bce6ce63265
       </profile>
     </annotationProcessing>
   </component>
