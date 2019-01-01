@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 public class testMenu {
 
     public static void main(String[] args){
-        System.setProperty("java.rmi.server.hostname",Constante.IP);
+        //System.setProperty("java.rmi.server.hostname",Constante.IP);
         int port = Constante.PORT;
         MenuInterface obj;
         try {

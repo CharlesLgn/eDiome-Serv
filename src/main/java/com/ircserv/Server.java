@@ -8,7 +8,7 @@ import java.rmi.registry.LocateRegistry;
 
 public class Server {
     public static void main(String[] args) {
-        System.setProperty("java.rmi.server.hostname","home.rscharff.fr");
+        //System.setProperty("java.rmi.server.hostname","home.rscharff.fr");
         //Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("Shutdown Hook is running !")));
         try {
             int port = Constante.PORT;

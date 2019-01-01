@@ -6,6 +6,7 @@ import com.ircserv.metier.Message;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,8 +16,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
     public ServerImpl(int port) throws RemoteException {
         super(port);
-        message = new ArrayList<>(Arrays.asList(new Message("toto", LocalDate.now(), "tes1"),
-                                                new Message("toto", LocalDate.now(), "tes2")));
+        message = new ArrayList<>(Arrays.asList(new Message("toto", LocalDateTime.now(), "tes1"),
+                                                new Message("toto", LocalDateTime.now(), "tes2")));
     }
 
     @Override
@@ -25,7 +26,20 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     }
 
     @Override
+    public ArrayList<Message> getMessages(int nbLastMessage) throws RemoteException {
+        if (nbLastMessage > message.size()){
+            return message;
+        }else {
+            ArrayList<Message> res = new ArrayList<>();
+            for (int i = nbLastMessage ; i > 0; i--){
+                res.add(message.get(message.size()-i));
+            }
+            return res;
+        }
+    }
+
+    @Override
     public void send(String pseudo, String message) {
-        this.message.add(new Message(pseudo, LocalDate.now(), message));
+        this.message.add(new Message(pseudo, LocalDateTime.now(), message));
     }
 }
