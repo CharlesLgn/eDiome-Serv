@@ -6,6 +6,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.sql.Date;
+
 
 public class UtilisateurManager {
     protected SessionFactory sessionFactory;
@@ -36,14 +38,13 @@ public class UtilisateurManager {
         Utilisateur user = new Utilisateur();
         user.setNom("Cuoco");
         user.setPrenom("Lucas");
-        user.setPseudonyme("lulu");
         user.setIdentifiant("LucasCuoco");
+        user.setDate_inscription(new Date(System.currentTimeMillis()));
+        user.setDate_naissance(new Date(System.currentTimeMillis()));
         user.setMot_de_passe("test");
         user.setMail_pro("test");
-        user.setMail_perso("test");
         user.setTelephone_pro("test");
-        user.setTelephone_perso("test");
-        user.setTelephone_fixe("test");
+
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -105,7 +106,7 @@ public class UtilisateurManager {
         // code to run the program
         UtilisateurManager manager = new UtilisateurManager();
         manager.setup();
-        //manager.create();
+        manager.create();
         manager.exit();
     }
 }

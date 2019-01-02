@@ -67,6 +67,6 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     @Override
     public int createUser(Utilisateur user) throws RemoteException {
 
-        return user.getNo_utilisateur();
+        return user.getNoUtilisateur();
     }
 }

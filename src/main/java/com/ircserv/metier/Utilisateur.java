@@ -11,32 +11,29 @@ import java.sql.Date;
 @Table(name = "utilisateur")
 public class Utilisateur implements Serializable {
 
+    public Utilisateur() {
+    }
 
 
-    @Id
-    @Column(name = "no_utilisateur")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int no_utilisateur;
+    private int noUtilisateur;
     private String nom;
     private String prenom;
-    private String pseudonyme;
     private String identifiant;
     private String mot_de_passe;
     private Date date_naissance;
     private Date date_inscription;
-    private String adresse;
     private String mail_pro;
-    private String mail_perso;
     private String telephone_pro;
-    private String telephone_perso;
-    private String telephone_fixe;
 
-    public int getNo_utilisateur() {
-        return no_utilisateur;
+    @Id
+    @Column(name = "no_utilisateur")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getNoUtilisateur() {
+        return noUtilisateur;
     }
 
-    public void setNo_utilisateur(int no_utilisateur) {
-        this.no_utilisateur = no_utilisateur;
+    public void setNoUtilisateur(int no_utilisateur) {
+        this.noUtilisateur = no_utilisateur;
     }
 
     public String getNom() {
@@ -55,13 +52,6 @@ public class Utilisateur implements Serializable {
         this.prenom = prenom;
     }
 
-    public String getPseudonyme() {
-        return pseudonyme;
-    }
-
-    public void setPseudonyme(String pseudonyme) {
-        this.pseudonyme = pseudonyme;
-    }
 
     public String getIdentifiant() {
         return identifiant;
@@ -95,13 +85,6 @@ public class Utilisateur implements Serializable {
         this.date_inscription = date_inscription;
     }
 
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
 
     public String getMail_pro() {
         return mail_pro;
@@ -111,13 +94,6 @@ public class Utilisateur implements Serializable {
         this.mail_pro = mail_pro;
     }
 
-    public String getMail_perso() {
-        return mail_perso;
-    }
-
-    public void setMail_perso(String mail_perso) {
-        this.mail_perso = mail_perso;
-    }
 
     public String getTelephone_pro() {
         return telephone_pro;
@@ -126,20 +102,5 @@ public class Utilisateur implements Serializable {
     public void setTelephone_pro(String telephone_pro) {
         this.telephone_pro = telephone_pro;
     }
-
-    public String getTelephone_perso() {
-        return telephone_perso;
-    }
-
-    public void setTelephone_perso(String telephone_perso) {
-        this.telephone_perso = telephone_perso;
-    }
-
-    public String getTelephone_fixe() {
-        return telephone_fixe;
-    }
-
-    public void setTelephone_fixe(String telephone_fixe) {
-        this.telephone_fixe = telephone_fixe;
-    }
 }
+
