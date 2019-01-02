@@ -20,16 +20,7 @@ public class testServer {
             System.out.println(messages);
             int x = obj.getMessages().size()+1;
 
-            obj.send("moi", "message " + x);
-            obj.send("moi", "message " + x);
-            obj.send("moi", "message " + x);
-            obj.send("moi", "message " + x);
-            obj.send("moi", "message " + x);
-            obj.send("moi", "message " + x);
-            obj.send("moi", "message " + x);
-            obj.send("moi", "message " + x);
-            obj.send("moi", "message " + x);
-            obj.send("moi", "message " + x);
+
 
         } catch (MalformedURLException | RemoteException | NotBoundException e) {
             // TODO Auto-generated catch block

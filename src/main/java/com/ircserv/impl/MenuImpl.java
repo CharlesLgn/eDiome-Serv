@@ -3,6 +3,7 @@ package com.ircserv.impl;
 import com.ircserv.contstante.Constante;
 import com.ircserv.inter.MenuInterface;
 import com.ircserv.metier.Server;
+import com.ircserv.metier.Utilisateur;
 import com.ircserv.utils.XMLDataFinder;
 
 import java.rmi.Naming;
@@ -64,7 +65,8 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     }
 
     @Override
-    public int createUser(String name, String psw) throws RemoteException {
-        return XMLDataFinder.addUser(name, psw);
+    public int createUser(Utilisateur user) throws RemoteException {
+
+        return user.getNo_utilisateur();
     }
 }
