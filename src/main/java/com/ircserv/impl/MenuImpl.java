@@ -3,13 +3,13 @@ package com.ircserv.impl;
 import com.ircserv.contstante.Constante;
 import com.ircserv.inter.MenuInterface;
 import com.ircserv.metier.Server;
+import com.ircserv.utils.XMLDataFinder;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
 
@@ -50,10 +50,21 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
 
     @Override
     public ArrayList<Server> findServerByUser(int userId) throws RemoteException {
-        ArrayList<Server> servers = new ArrayList<>();
-        servers.add(new Server(0, "mon serveur"));
-        servers.add(new Server(2, "un autre serveur"));
-        servers.add(new Server(3, "Ta mère le buisson"));
-        return servers;
+        return XMLDataFinder.getServByUser(userId);
+    }
+
+    @Override
+    public int connect(String user, String psw) throws RemoteException {
+        return XMLDataFinder.getUserId(user, psw);
+    }
+
+    @Override
+    public String getUserName(int id) throws RemoteException {
+        return XMLDataFinder.getUserName(id);
+    }
+
+    @Override
+    public int createUser(String name, String psw) throws RemoteException {
+        return XMLDataFinder.addUser(name, psw);
     }
 }

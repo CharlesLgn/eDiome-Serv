@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<users>
+    <user id="1">
+        <pseudo>Nyphew</pseudo>
+        <mdp>f2d81a260dea8a100dd517984e53c56a7523d96942a834b9cdc249bd4e8c7aa9</mdp>
+        <servers>
+            <serv>0</serv>
+            <serv>1</serv>
+            <serv>4</serv>
+        </servers>
+    </user>
+    <user id="2">
+        <pseudo>Cyril</pseudo>
+        <mdp>03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4</mdp>
+        <servers>
+            <serv>0</serv>
+            <serv>2</serv>
+        </servers>
+    </user>
+    <user id="3">
+        <name>Lucas</name>
+        <mdp>abcd</mdp>
+        <servers>
+            <serv>0</serv>
+        </servers>
+    </user>
+    <user id="4">
+        <name>Loic</name>
+        <mdp>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</mdp>
+        <servers>
+            <serv>0</serv>
+        </servers>
+    </user>
+</users>

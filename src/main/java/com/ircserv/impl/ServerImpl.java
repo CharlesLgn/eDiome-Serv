@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
@@ -16,8 +17,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
     public ServerImpl(int port) throws RemoteException {
         super(port);
-        message = new ArrayList<>(Arrays.asList(new Message("toto", LocalDateTime.now(), "tes1"),
-                                                new Message("toto", LocalDateTime.now(), "tes2")));
+        message = new ArrayList<>(Collections.singletonList(new Message("serveur", LocalDateTime.now(), "server ouvert")));
     }
 
     @Override

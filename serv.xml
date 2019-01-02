@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<servers>
+    <server id="0">
+        <nom>General</nom>
+    </server>
+    <server id="1">
+        <nom>le serveur</nom>
+    </server>
+    <server id="2">
+        <nom>la matrice</nom>
+    </server>
+    <server id="3">
+        <nom>404</nom>
+    </server>
+    <server id="4">
+        <nom>OMG ♥</nom>
+    </server>
+</servers>
