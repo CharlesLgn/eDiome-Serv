@@ -1,7 +1,7 @@
 [![official GreenLobster project](https://img.shields.io/badge/GL-Official-276955.svg)](https://trello.com/greenlobster2/home)
 [![front](https://img.shields.io/badge/eDiome-Front-41A48D.svg)](https://github.com/CharlesLgn/IRCServ)
 
-# Internet Relay Chat (Server Side) <img src="https://img.icons8.com/color/48/000000/server.png">
+# Internet Relay Chat (Server Side) <img src="https://img.icons8.com/color/48/000000/internet-hub.png">
 Project made by
     <span style="color:blue; font-family:Georgia;">CHALLOUATTE Cyril</span>
     <span style="color:blue; font-family:Georgia;">CUOCO Lucas</span>,
