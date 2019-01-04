@@ -60,6 +60,7 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     @Override
     public int connect(String user, String psw) throws RemoteException {
         UtilisateurManager manager = new UtilisateurManager();
+        manager.setup();
         int res =  manager.connexionCHeck(user, psw);
 
         return res;

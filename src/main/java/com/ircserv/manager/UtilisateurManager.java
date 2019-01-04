@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 
 import java.sql.Date;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class UtilisateurManager {
@@ -63,13 +64,22 @@ public class UtilisateurManager {
     public int connexionCHeck(String pseudo, String mdp) {
         // code to get a book
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("select user.id from Utilisateur as user where identifiant = :pseudo and mot_de_passe = :mdp");
+        Query query = session.createQuery("select user from Utilisateur as user where identifiant = :pseudo and mot_de_passe = :mdp");
         query.setParameter("pseudo", pseudo);
         query.setParameter("mdp", mdp);
-        Iterator users = query.iterate();
-        while (users.hasNext()) {
-            Utilisateur user = (Utilisateur) users.next();
-            return user.getNoUtilisateur();
+        List<Utilisateur> users = query.list();
+        for (int i = 0; i < users.size(); i++) {
+            try{
+                Utilisateur user = (Utilisateur) (users.get(i));
+                int id = user.getNoUtilisateur();
+                return id;
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+
+
         }
         return -1;
 
