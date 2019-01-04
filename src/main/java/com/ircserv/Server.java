@@ -8,7 +8,8 @@ import java.rmi.registry.LocateRegistry;
 
 public class Server {
     public static void main(String[] args) {
-        //System.setProperty("java.rmi.server.hostname","home.rscharff.fr");
+        Constante.IP = args[0];
+        System.setProperty("java.rmi.server.hostname",Constante.IP);
         //Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("Shutdown Hook is running !")));
         try {
             int port = Constante.PORT;
@@ -17,8 +18,7 @@ public class Server {
             Naming.rebind("//"+Constante.IP+":" + port + "/menu", obj);
             System.out.println("server ready");
         } catch (Exception e) {
-            // TODO: handle exception
-            System.out.println("echec : " + e);
+            e.printStackTrace();
         }
     }
 }

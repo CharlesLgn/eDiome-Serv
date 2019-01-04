@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--TODO delete file after hibernate works-->
 <users>
     <user id="1">
         <pseudo>Nyphew</pseudo>
@@ -27,13 +28,6 @@
     <user id="4">
         <name>Loic</name>
         <mdp>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</mdp>
-        <servers>
-            <serv>0</serv>
-        </servers>
-    </user>
-    <user id="21">
-
-
         <servers>
             <serv>0</serv>
         </servers>

@@ -1,5 +1,6 @@
 package com.ircserv.impl;
 
+import com.ircserv.contstante.Constante;
 import com.ircserv.inter.ServerInterface;
 import com.ircserv.metier.Message;
 import org.apache.commons.io.FileUtils;
@@ -12,15 +13,17 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
   private ArrayList<Message> message;
+  private int numServ;
 
-  public ServerImpl(int port) throws RemoteException {
+  public ServerImpl(int port, int numServ) throws RemoteException {
     super(port);
-    message = new ArrayList<>(Collections.singletonList(new Message("serveur", LocalDateTime.now(), "server ouvert")));
+    message = new ArrayList<>();
+    this.numServ = numServ;
+    send("server", "server open !!");
   }
 
   @Override
@@ -41,26 +44,40 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     }
   }
 
+  private void send(String pseudo, String typeMessage, String message) {
+    this.message.add(new Message(pseudo, LocalDateTime.now(), typeMessage, message));
+  }
+
   @Override
   public void send(String pseudo, String message) {
-    this.message.add(new Message(pseudo, LocalDateTime.now(), message));
+    send(pseudo, "message", message);
   }
 
   @Override
   public void uploadFile(String pseudo, byte[] data, String filename) {
-    int i = 0;
     try {
       String content = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(data));
+      String typeMessage;
       filename = filename.replaceAll(" ","_");
-      String path = "C:\\Users\\ligony\\Documents\\cours%20LP\\condProj\\eDiome\\file\\" + filename.replaceAll(" ", "_");
-      FileUtils.writeByteArrayToFile(new File(path), data);
+      File file = new File("../data/server"+numServ+"/"+filename);
+      System.out.println(file.getAbsolutePath().replace(" ", "?"));
+      FileUtils.writeByteArrayToFile(file, data);
+      String path = file.getAbsolutePath();
+      String extension = filename.replaceAll(".*[.]", "");
+
+
       if (content != null && content.contains("image")) {
-        send(pseudo, ":image:" + path);
-      } else if (filename.matches("[A-z0-9_.]+.wav") || (filename.matches("[A-z0-9_.]+.mp3"))) {
-        send(pseudo, ":audio:" + path);
+        typeMessage = "picture";
+      } else if (Constante.AUDIO.contains(extension)) {
+        typeMessage = "audio";
+      } else if (Constante.ARCHIVE.contains(extension)) {
+        typeMessage = "archive";
+      } else if (Constante.CODE.contains(extension)) {
+        typeMessage = "code";
       } else {
-        send(pseudo, ":file:" + path);
+        typeMessage = "file";
       }
+      send(pseudo, typeMessage, path);
     } catch (IOException e) {
       e.printStackTrace();
     }
