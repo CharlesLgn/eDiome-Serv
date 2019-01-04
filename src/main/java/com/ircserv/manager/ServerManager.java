@@ -1,4 +1,5 @@
 package com.ircserv.manager;
+import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class UtilisateurManager {
+public class ServerManager {
     protected SessionFactory sessionFactory;
 
     public void setup() {
@@ -36,16 +37,13 @@ public class UtilisateurManager {
         sessionFactory.close();
     }
 
-    public void create(Utilisateur user) {
-        // code to save a book
-        user.setDate_inscription(new Date(System.currentTimeMillis()));
-        user.setDate_naissance(new Date(System.currentTimeMillis()));
+    public void create(Server server) {
 
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(user);
+        session.save(server);
 
         session.getTransaction().commit();
         session.close();
@@ -58,17 +56,6 @@ public class UtilisateurManager {
         Utilisateur user = session.get(Utilisateur.class, id);
 
         return user.getIdentifiant();
-
-
-    }
-
-    public Utilisateur readUser(int id) {
-        // code to get a book
-        Session session = sessionFactory.openSession();
-
-        Utilisateur user = session.get(Utilisateur.class, id);
-
-        return user;
 
 
     }
@@ -99,35 +86,50 @@ public class UtilisateurManager {
 
     protected void update() {
 /**
-        // code to modify a book
-        Book book = new Book();
-        book.setId(2);
-        book.setTitre("Prise en main de eDiome");
-        book.setAuteur("Charles Ligony");
-        book.setPrix(19.99f);
+ // code to modify a book
+ Book book = new Book();
+ book.setId(2);
+ book.setTitre("Prise en main de eDiome");
+ book.setAuteur("Charles Ligony");
+ book.setPrix(19.99f);
 
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+ Session session = sessionFactory.openSession();
+ session.beginTransaction();
 
-        session.update(book);
+ session.update(book);
 
-        session.getTransaction().commit();
-        session.close();**/
+ session.getTransaction().commit();
+ session.close();**/
     }
 
     protected void delete() {
         /**
-        // code to remove a book
-        Book book = new Book();
-        book.setId(2);
+         // code to remove a book
+         Book book = new Book();
+         book.setId(2);
 
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+         Session session = sessionFactory.openSession();
+         session.beginTransaction();
 
-        session.delete(book);
+         session.delete(book);
 
-        session.getTransaction().commit();
-        session.close();**/
+         session.getTransaction().commit();
+         session.close();**/
+    }
+
+    public static void main(String[] args) {
+    ServerManager sm = new ServerManager();
+    sm.setup();
+    Server server = new Server();
+    server.setName("test");
+    UtilisateurManager um = new UtilisateurManager();
+
+    um.setup();
+
+    server.setCreateur(um.readUser(13));
+    sm.create(server);
+
+
     }
 
 }

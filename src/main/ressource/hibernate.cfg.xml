@@ -12,6 +12,7 @@
         <property name="show_sql">true</property>
 
         <mapping class="com.ircserv.metier.Utilisateur"/>
+        <mapping class="com.ircserv.metier.Server"/>
 
     </session-factory>
 </hibernate-configuration>
