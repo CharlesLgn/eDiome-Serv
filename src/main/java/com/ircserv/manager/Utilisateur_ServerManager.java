@@ -1,19 +1,15 @@
 package com.ircserv.manager;
+
 import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
+import com.ircserv.metier.Utilisateur_Server;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.query.Query;
 
-import java.sql.Date;
-import java.util.Iterator;
-import java.util.List;
-
-
-public class ServerManager {
+public class Utilisateur_ServerManager {
     protected SessionFactory sessionFactory;
 
     public void setup() {
@@ -37,25 +33,14 @@ public class ServerManager {
         sessionFactory.close();
     }
 
-    public Server readServer(int id) {
-        // code to get a book
-        Session session = sessionFactory.openSession();
 
-        Server server = session.get(Server.class, id);
-
-        return server;
-
-
-    }
-
-
-    public void create(Server server) {
+    public void create(Utilisateur_Server userver) {
 
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(server);
+        session.save(userver);
 
         session.getTransaction().commit();
         session.close();
@@ -64,20 +49,23 @@ public class ServerManager {
 
 
     public static void main(String[] args) {
-    ServerManager sm = new ServerManager();
-    sm.setup();
-    Server server = new Server();
-    server.setName("testu");
-    UtilisateurManager um = new UtilisateurManager();
+        ServerManager sm = new ServerManager();
+        sm.setup();
+        Server server = sm.readServer(1);
+        UtilisateurManager um = new UtilisateurManager();
 
-    um.setup();
+        um.setup();
 
-    server.setCreateur(um.readUser(14));
-    sm.create(server);
+        Utilisateur user = um.readUser(17);
+        Utilisateur_ServerManager usm = new Utilisateur_ServerManager();
+        Utilisateur_Server us = new Utilisateur_Server();
+        us.setCode_serveur(server);
+        us.setNo_utilisateur(user);
+        usm.setup();
+        usm.create(us);
+        sm.create(server);
 
 
     }
 
 }
-
-
