@@ -2,6 +2,7 @@ package com.ircserv.impl;
 
 import com.ircserv.contstante.Constante;
 import com.ircserv.inter.MenuInterface;
+import com.ircserv.manager.UtilisateurManager;
 import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
 import com.ircserv.utils.XMLDataFinder;
@@ -51,22 +52,39 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
 
     @Override
     public ArrayList<Server> findServerByUser(int userId) throws RemoteException {
+
+
         return XMLDataFinder.getServByUser(userId);
     }
 
     @Override
     public int connect(String user, String psw) throws RemoteException {
-        return XMLDataFinder.getUserId(user, psw);
+        UtilisateurManager manager = new UtilisateurManager();
+        int res =  manager.connexionCHeck(user, psw);
+
+        return res;
     }
 
     @Override
     public String getUserName(int id) throws RemoteException {
-        return XMLDataFinder.getUserName(id);
+        UtilisateurManager manager = new UtilisateurManager();
+        return manager.read(id);
+
     }
 
     @Override
     public int createUser(Utilisateur user) throws RemoteException {
 
-        return user.getNoUtilisateur();
+        try {
+            UtilisateurManager manager = new UtilisateurManager();
+            manager.setup();
+            manager.create(user);
+            return user.getNoUtilisateur();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return -1;
+        }
     }
 }

@@ -5,14 +5,16 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 
 import java.sql.Date;
+import java.util.Iterator;
 
 
 public class UtilisateurManager {
     protected SessionFactory sessionFactory;
 
-    protected void setup() {
+    public void setup() {
         // code to load Hibernate Session factory
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
@@ -33,17 +35,10 @@ public class UtilisateurManager {
         sessionFactory.close();
     }
 
-    protected void create() {
+    public void create(Utilisateur user) {
         // code to save a book
-        Utilisateur user = new Utilisateur();
-        user.setNom("Cuoco");
-        user.setPrenom("Lucas");
-        user.setIdentifiant("LucasCuoco");
         user.setDate_inscription(new Date(System.currentTimeMillis()));
         user.setDate_naissance(new Date(System.currentTimeMillis()));
-        user.setMot_de_passe("test");
-        user.setMail_pro("test");
-        user.setTelephone_pro("test");
 
 
         Session session = sessionFactory.openSession();
@@ -55,18 +50,30 @@ public class UtilisateurManager {
         session.close();
     }
 
-    protected void read() {
-       /** // code to get a book
+    public String read(int id) {
+        // code to get a book
         Session session = sessionFactory.openSession();
 
-        long bookId = 2;
-        Book book = session.get(Book.class, bookId);
+        Utilisateur user = session.get(Utilisateur.class, id);
 
-        System.out.println("Title: " + book.getTitre());
-        System.out.println("Author: " + book.getAuteur());
-        System.out.println("Price: " + book.getPrix());
+        return user.getIdentifiant();
 
-        session.close();**/
+
+    }
+    public int connexionCHeck(String pseudo, String mdp) {
+        // code to get a book
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select user.id from Utilisateur as user where identifiant = :pseudo and mot_de_passe = :mdp");
+        query.setParameter("pseudo", pseudo);
+        query.setParameter("mdp", mdp);
+        Iterator users = query.iterate();
+        while (users.hasNext()) {
+            Utilisateur user = (Utilisateur) users.next();
+            return user.getNoUtilisateur();
+        }
+        return -1;
+
+
     }
 
     protected void update() {
@@ -102,13 +109,6 @@ public class UtilisateurManager {
         session.close();**/
     }
 
-    public static void main(String[] args) {
-        // code to run the program
-        UtilisateurManager manager = new UtilisateurManager();
-        manager.setup();
-        manager.create();
-        manager.exit();
-    }
 }
 
 
