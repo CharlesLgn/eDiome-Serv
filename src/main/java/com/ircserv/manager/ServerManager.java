@@ -49,73 +49,7 @@ public class ServerManager {
         session.close();
     }
 
-    public String read(int id) {
-        // code to get a book
-        Session session = sessionFactory.openSession();
 
-        Utilisateur user = session.get(Utilisateur.class, id);
-
-        return user.getIdentifiant();
-
-
-    }
-    public int connexionCHeck(String pseudo, String mdp) {
-        // code to get a book
-        Session session = sessionFactory.openSession();
-        Query query = session.createQuery("select user from Utilisateur as user where identifiant = :pseudo and mot_de_passe = :mdp");
-        query.setParameter("pseudo", pseudo);
-        query.setParameter("mdp", mdp);
-        List<Utilisateur> users = query.list();
-        for (int i = 0; i < users.size(); i++) {
-            try{
-                Utilisateur user = (Utilisateur) (users.get(i));
-                int id = user.getNoUtilisateur();
-                return id;
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-
-
-        }
-        return -1;
-
-
-    }
-
-    protected void update() {
-/**
- // code to modify a book
- Book book = new Book();
- book.setId(2);
- book.setTitre("Prise en main de eDiome");
- book.setAuteur("Charles Ligony");
- book.setPrix(19.99f);
-
- Session session = sessionFactory.openSession();
- session.beginTransaction();
-
- session.update(book);
-
- session.getTransaction().commit();
- session.close();**/
-    }
-
-    protected void delete() {
-        /**
-         // code to remove a book
-         Book book = new Book();
-         book.setId(2);
-
-         Session session = sessionFactory.openSession();
-         session.beginTransaction();
-
-         session.delete(book);
-
-         session.getTransaction().commit();
-         session.close();**/
-    }
 
     public static void main(String[] args) {
     ServerManager sm = new ServerManager();

@@ -23,7 +23,7 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     }
 
     @Override
-    public int createNewServer() {
+    public int createNewServer() throws RemoteException {
         try {
             int port = Constante.PORT;
             LocateRegistry.getRegistry(port);
@@ -31,7 +31,8 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
             Naming.rebind("//"+ Constante.IP+":"+port+"/serv"+numServ, new ServerImpl(port, numServ));
             return numServ++;
         } catch (Exception e) {
-            e.printStackTrace();
+            // TODO: handle exception
+            System.out.println("echec : " + e);
         }
         return -1;
     }
@@ -44,27 +45,36 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
 
             Naming.unbind("//"+Constante.IP+":"+port+"/serv"+nbServ);
         } catch (Exception e) {
-            e.printStackTrace();
+            // TODO: handle exception
+            System.out.println("echec : " + e);
         }
     }
 
     @Override
-    public int connect(String user, String psw) {
-        return XMLDataFinder.getUserId(user, psw);
-    }
+    public ArrayList<Server> findServerByUser(int userId) throws RemoteException {
 
-    @Override
-    public ArrayList<Server> findServerByUser(int userId) {
+
         return XMLDataFinder.getServByUser(userId);
     }
 
     @Override
-    public String getUserName(int id) {
-        return XMLDataFinder.getUserName(id);
+    public int connect(String user, String psw) throws RemoteException {
+        UtilisateurManager manager = new UtilisateurManager();
+        manager.setup();
+        int res =  manager.connexionCHeck(user, psw);
+
+        return res;
     }
 
     @Override
-    public int createUser(Utilisateur user) {
+    public String getUserName(int id) throws RemoteException {
+        UtilisateurManager manager = new UtilisateurManager();
+        return manager.read(id);
+
+    }
+
+    @Override
+    public int createUser(Utilisateur user) throws RemoteException {
 
         try {
             UtilisateurManager manager = new UtilisateurManager();

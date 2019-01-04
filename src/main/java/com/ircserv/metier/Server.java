@@ -48,7 +48,8 @@ public class Server implements Serializable {
   }
 
 
-  @Column(name = "no_createur")
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "no_createur")
   public Utilisateur getCreateur() {
     return createur;
   }
