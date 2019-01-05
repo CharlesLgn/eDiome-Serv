@@ -32,7 +32,7 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
             int port = Constante.PORT;
             LocateRegistry.getRegistry(port);
 
-            Naming.rebind("//"+ Constante.IP+":"+port+"/serv"+numServ, new ServerImpl(port, numServ));
+            Naming.rebind("//" + Constante.IP + ":" + port + "/serv" + numServ, new ServerImpl(port, numServ));
             return numServ++;
         } catch (Exception e) {
             // TODO: handle exception
@@ -47,7 +47,7 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
             int port = Constante.PORT;
             LocateRegistry.getRegistry(port);
 
-            Naming.unbind("//"+Constante.IP+":"+port+"/serv"+nbServ);
+            Naming.unbind("//" + Constante.IP + ":" + port + "/serv" + nbServ);
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println("echec : " + e);
@@ -56,17 +56,26 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
 
     @Override
     public List<Server> findServerByUser(int userId) throws RemoteException {
-        Utilisateur_ServerManager manager = new Utilisateur_ServerManager();
-        manager.setup();
-        return manager.getServerByUser(userId);
-        //return XMLDataFinder.getServByUser(userId);
+        try {
+            Utilisateur_ServerManager manager = new Utilisateur_ServerManager();
+            UtilisateurManager uManager = new UtilisateurManager();
+            manager.setup();
+            uManager.setup();
+
+            Utilisateur user = uManager.readUser(userId);
+
+            return manager.getServerByUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return XMLDataFinder.getServByUser(userId);
+        }
     }
 
     @Override
     public int connect(String user, String psw) throws RemoteException {
         UtilisateurManager manager = new UtilisateurManager();
         manager.setup();
-        int res =  manager.connexionCHeck(user, psw);
+        int res = manager.connexionCHeck(user, psw);
 
         return res;
     }
@@ -96,9 +105,7 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
             usm.create(us);
 
             return user.getNoUtilisateur();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return -1;
         }

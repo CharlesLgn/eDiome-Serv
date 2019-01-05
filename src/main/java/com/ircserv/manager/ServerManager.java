@@ -17,7 +17,19 @@ public class ServerManager {
     protected SessionFactory sessionFactory;
 
     public void setup() {
-        HibernateUtils.setup(sessionFactory);
+        // code to load Hibernate Session factory
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure() // configures settings from hibernate.cfg.xml
+                .build();
+        try {
+            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        } catch (Exception ex) {
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.getTransaction().commit();
+        session.close();
     }
 
     protected void exit() {
