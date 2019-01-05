@@ -10,7 +10,7 @@ public class Constante {
 
     //Files Type
     public static List<String> AUDIO =   Arrays.asList("wav", "mp3", "m4a", "m3u8", "aif", "aiff");
-    public static List<String> ARCHIVE = Arrays.asList("zip", "7z", "rar", "tar", "iso", "");
+    public static List<String> ARCHIVE = Arrays.asList("zip", "7z", "rar", "tar", "iso");
     public static List<String> CODE =    Arrays.asList("java", "c", "h", "html", "css", "php", "js", "cpp", "hpp", "cs", "xml", "json");
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--TODO delete file after hibernate works-->
 <users>
-    <user id="1">
+    <user id="16">
         <pseudo>Nyphew</pseudo>
         <mdp>f2d81a260dea8a100dd517984e53c56a7523d96942a834b9cdc249bd4e8c7aa9</mdp>
         <servers>

@@ -1,10 +1,8 @@
 package com.ircserv.metier;
 
 
-import java.io.Serializable;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
 
 
 
