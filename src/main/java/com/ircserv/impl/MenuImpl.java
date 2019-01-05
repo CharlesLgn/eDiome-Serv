@@ -2,10 +2,12 @@ package com.ircserv.impl;
 
 import com.ircserv.contstante.Constante;
 import com.ircserv.inter.MenuInterface;
+import com.ircserv.manager.ServerManager;
 import com.ircserv.manager.UtilisateurManager;
 import com.ircserv.manager.Utilisateur_ServerManager;
 import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
+import com.ircserv.metier.Utilisateur_Server;
 import com.ircserv.utils.XMLDataFinder;
 
 import java.rmi.Naming;
@@ -83,6 +85,16 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
             UtilisateurManager manager = new UtilisateurManager();
             manager.setup();
             manager.create(user);
+            ServerManager sm = new ServerManager();
+            sm.setup();
+
+            Utilisateur_ServerManager usm = new Utilisateur_ServerManager();
+            usm.setup();
+            Utilisateur_Server us = new Utilisateur_Server();
+            us.setNo_utilisateur(user);
+            us.setCode_serveur(sm.readServer(1));
+            usm.create(us);
+
             return user.getNoUtilisateur();
         }
         catch (Exception e)

@@ -60,7 +60,7 @@ public class ServerManager {
 
     um.setup();
 
-    server.setCreateur(um.readUser(13));
+    server.setCreateur(um.readUser(14));
     sm.create(server);
 
 
