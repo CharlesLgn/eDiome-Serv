@@ -13,6 +13,7 @@
 
         <mapping class="com.ircserv.metier.Utilisateur"/>
         <mapping class="com.ircserv.metier.Server"/>
+        <mapping class="com.ircserv.metier.Utilisateur_Server"/>
 
     </session-factory>
 </hibernate-configuration>
