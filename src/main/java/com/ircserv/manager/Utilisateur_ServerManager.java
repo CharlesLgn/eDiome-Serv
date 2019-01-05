@@ -8,24 +8,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 public class Utilisateur_ServerManager {
     protected SessionFactory sessionFactory;
 
     public void setup() {
-        // code to load Hibernate Session factory
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
-                .build();
-        try {
-            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        } catch (Exception ex) {
-            StandardServiceRegistryBuilder.destroy(registry);
-        }
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.getTransaction().commit();
-        session.close();
+        HibernateUtils.setup(sessionFactory);
     }
 
     protected void exit() {
@@ -35,8 +26,6 @@ public class Utilisateur_ServerManager {
 
 
     public void create(Utilisateur_Server userver) {
-
-
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -46,7 +35,17 @@ public class Utilisateur_ServerManager {
         session.close();
     }
 
+    public List<Server> getServerByUser(int userId) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select serveur.code_serveur, serveur.nom_serveur from serveur, utilisateur_serveur where utilisateur_serveur.code_serveur = serveur.code_serveur and utilisateur_server.no_utilisateur = :user");
+        query.setParameter("user", userId);
+        List serv = query.list();
+        return serv;
+    }
 
+    public void getUserByServer(Utilisateur user) {
+
+    }
 
     public static void main(String[] args) {
         ServerManager sm = new ServerManager();
