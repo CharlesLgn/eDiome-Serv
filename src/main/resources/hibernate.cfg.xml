@@ -14,6 +14,8 @@
         <mapping class="com.ircserv.metier.Utilisateur"/>
         <mapping class="com.ircserv.metier.Server"/>
         <mapping class="com.ircserv.metier.Utilisateur_Server"/>
+        <mapping class="com.ircserv.metier.Droit"/>
+        <mapping class="com.ircserv.metier.Utilisateur_Droit_Server"/>
 
     </session-factory>
 </hibernate-configuration>
