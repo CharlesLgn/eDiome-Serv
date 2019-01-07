@@ -62,12 +62,12 @@ public class Utilisateur_ServerManager {
     public static void main(String[] args) {
         ServerManager sm = new ServerManager();
         sm.setup();
-        Server server = sm.readServer(2);
+        Server server = sm.readServer(5);
         UtilisateurManager um = new UtilisateurManager();
 
         um.setup();
 
-        Utilisateur user = um.readUser(3);
+        Utilisateur user = um.readUser(14);
         Utilisateur_ServerManager usm = new Utilisateur_ServerManager();
         Utilisateur_Server us = new Utilisateur_Server();
         us.setCode_serveur(server);

@@ -60,7 +60,7 @@ public class Utilisateur_Droit_ServerManager {
         um.setup();
         sm.setup();
         dm.setup();
-        Utilisateur user = um.readUser(22);
+        Utilisateur user = um.readUser(14);
         Server server = sm.readServer(1);
         Droit droit = dm.readDroit(1);
         Utilisateur_Droit_Server usd = new Utilisateur_Droit_Server();

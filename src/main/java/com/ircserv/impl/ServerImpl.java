@@ -1,22 +1,16 @@
 package com.ircserv.impl;
 
-import com.ircserv.contstante.Constante;
 import com.ircserv.inter.ServerInterface;
-import com.ircserv.manager.MessageManager;
-import com.ircserv.manager.ServerManager;
-import com.ircserv.manager.UtilisateurManager;
-import com.ircserv.metier.Message;
-import com.ircserv.metier.Server;
-import com.ircserv.metier.Utilisateur;
+import com.ircserv.manager.*;
+import com.ircserv.metier.*;
 import org.apache.commons.io.FileUtils;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.URLConnection;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
@@ -48,7 +42,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     }
   }
 
-  private void send(int userId,int servId, String typeMessage, String message) {
+  private void send(int userId, int servId, String message, PieceJointe pieceJointe) {
 
     ServerManager sm = new ServerManager();
     sm.setup();
@@ -62,43 +56,46 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     messageManager.setup();
 
     Message message1 = new Message.MessageBuilder()
-                                 .setDate(LocalDateTime.now())
-                                 .setContenu(message)
-                                 .setUser(user).addServ(server).addTypeMessage(typeMessage).build();
+                                 .setContenu(message).setDate(Timestamp.from(Instant.now()))
+                                 .setUser(user).addServ(server).addPieceJointe(pieceJointe).build();
     this.message.add(message1);
     messageManager.create(message1);
   }
 
   @Override
   public void send(int userId, int servId, String message) {
-    send(userId, servId, "message", message);
+    send(userId, servId, message, null);
   }
 
   @Override
   public void uploadFile(int userId, int servId, byte[] data, String filename) {
     try {
-      String content = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(data));
-      String typeMessage;
       filename = filename.replaceAll(" ","_");
       File file = new File("../data/server"+numServ+"/"+filename);
       System.out.println(file.getAbsolutePath().replace(" ", "?"));
       FileUtils.writeByteArrayToFile(file, data);
-      String path = file.getAbsolutePath();
+      String path = file.getPath();
+      System.out.println(path);
       String extension = filename.replaceAll(".*[.]", "");
 
-
-      if (content != null && content.contains("image")) {
-        typeMessage = "picture";
-      } else if (Constante.AUDIO.contains(extension)) {
-        typeMessage = "audio";
-      } else if (Constante.ARCHIVE.contains(extension)) {
-        typeMessage = "archive";
-      } else if (Constante.CODE.contains(extension)) {
-        typeMessage = "code";
-      } else {
-        typeMessage = "file";
+      TypePieceJointeManager tpjm = new TypePieceJointeManager();
+      tpjm.setup();
+      TypePieceJointe tpj = tpjm.getPJbyExtension(extension);
+      if (tpj.getLibelle() == null){
+        tpj.setExtension(extension);
+        tpj.setLibelle("file");
+        tpjm.create(tpj);
+        tpj = tpjm.getPJbyExtension(extension);
       }
-      send(userId, servId, typeMessage, path);
+
+      System.out.println(tpj.getLibelle());
+      PieceJointeManager pjm = new PieceJointeManager();
+      pjm.setup();
+
+      PieceJointe pj = new PieceJointe(path, tpj);
+      pjm.create(pj);
+
+      send(userId, servId,"", pj);
     } catch (IOException e) {
       e.printStackTrace();
     }
