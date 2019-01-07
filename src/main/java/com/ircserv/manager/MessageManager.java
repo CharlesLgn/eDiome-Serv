@@ -1,14 +1,19 @@
 package com.ircserv.manager;
 
-import com.ircserv.metier.Droit;
+import com.ircserv.metier.Message;
+import com.ircserv.metier.Server;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 
-public class DroitManager {
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+public class MessageManager {
     protected SessionFactory sessionFactory;
 
     public void setup() {
@@ -28,46 +33,41 @@ public class DroitManager {
     }
 
     protected void exit() {
-        // code to close Hibernate Session factory
         sessionFactory.close();
     }
 
-    public Droit readDroit(int id) {
-        // code to get a book
+    public Message readMessage(int id) {
         Session session = sessionFactory.openSession();
-
-        Droit droit = session.get(Droit.class, id);
-
-        return droit;
-
-
+        Message message = session.get(Message.class, id);
+        return message;
     }
 
-    public void create(Droit droit) {
 
-
+    public void create(Message message) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
-        session.save(droit);
-
+        session.save(message);
         session.getTransaction().commit();
         session.close();
     }
 
-    public static void main(String[] args) {
-       try{
-           DroitManager dm = new DroitManager();
-           dm.setup();
-           Droit droit = new Droit();
-           droit.setDescription("testDesc");
-           droit.setLibelle("testLib");
-           dm.create(droit);
-           dm.exit();
-       } catch (Exception e){
-           e.printStackTrace();
-        }
+    public List<Message> getMessagesByServ(Server server){
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from Message as message where message.server = :server");
+        query.setParameter("server", server);
+        List<Message> messages = query.list();
+        return new ArrayList<>(messages);
     }
 
-}
 
+
+    public static void main(String[] args) {
+        MessageManager messageManager = new MessageManager();
+        messageManager.setup();
+
+        ServerManager sm = new ServerManager();
+        sm.setup();
+
+        System.out.println(messageManager.getMessagesByServ(sm.readServer(1)));
+    }
+}

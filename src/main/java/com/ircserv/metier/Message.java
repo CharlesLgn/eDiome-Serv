@@ -1,53 +1,67 @@
 package com.ircserv.metier;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class    Message implements Serializable {
+@Entity
+@Table(name = "message")
+public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String pseudo;
+    private int id;
+    private Server server;
     private String typeMessage;
     private LocalDateTime date;
+    private Utilisateur user;
     private String contenu;
 
-    public Message(String pseudo, LocalDateTime date, String typeMessage,String contenu) {
-        this.pseudo = pseudo;
-        this.date = date;
-        this.contenu = contenu;
+
+    public Message(int id, Utilisateur user, String typeMessage, LocalDateTime date, String contenu, Server server) {
+        this.id = id;
+        this.user = user;
         this.typeMessage = typeMessage;
-    }
-
-    public String getPseudo() {
-        return pseudo;
-    }
-
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
         this.date = date;
-    }
-
-    public String getContenu() {
-        return contenu;
-    }
-
-    public void setContenu(String contenu) {
         this.contenu = contenu;
+        this.server = server;
     }
 
-    public String getStringDate(){
-        return  "" + date.getDayOfMonth()+'-'+ date.getMonthValue() + '-' + date.getYear() + ' ' +
-                date.getHour()+':'+ date.getMinute() + ':' + date.getSecond();
+    public Message(){}
+
+    @Id
+    @Column(name = "id_message")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "no_utilisateur")
+    public Utilisateur getUser() {
+        return user;
+    }
+
+    public void setUser(Utilisateur user) {
+        this.user = user;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "code_serveur")
+    public Server getServer() {
+        return server;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
+    }
+
+    @Column(name = "type_message")
     public String getTypeMessage() {
         return typeMessage;
     }
@@ -56,9 +70,23 @@ public class    Message implements Serializable {
         this.typeMessage = typeMessage;
     }
 
-    @Override
-    public String toString() {
-        return  pseudo + " : " + contenu;
+    @Column(name = "date_envoi")
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    @Lob
+    @Column(name = "corps_initial", columnDefinition = "LONGTEXT")
+    public String getContenu() {
+        return contenu;
+    }
+
+    public void setContenu(String contenu) {
+        this.contenu = contenu;
     }
 
     @Override
@@ -66,14 +94,16 @@ public class    Message implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
-        return Objects.equals(pseudo, message.pseudo) &&
-                Objects.equals(date, message.date) &&
-                Objects.equals(contenu, message.contenu) &&
-                Objects.equals(typeMessage, message.typeMessage);
+        return id == message.id && Objects.equals(user, message.user) && Objects.equals(typeMessage, message.typeMessage) && Objects.equals(date, message.date) && Objects.equals(contenu, message.contenu) && Objects.equals(server, message.server);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pseudo, date, contenu, typeMessage);
+        return Objects.hash(id, user, typeMessage, date, contenu, server);
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" + "id=" + id + ", user=" + user + ", typeMessage='" + typeMessage + '\'' + ", date=" + date + ", contenu='" + contenu + '\'' + ", server=" + server + '}';
     }
 }

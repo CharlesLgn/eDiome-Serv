@@ -7,7 +7,9 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateUtils {
-    public static void setup(SessionFactory sessionFactory) {
+    public HibernateUtils(){}
+
+    public void setup(SessionFactory sessionFactory) {
         // code to load Hibernate Session factory
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml

@@ -27,6 +27,7 @@ public class Utilisateur_Droit_Server  implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_droit")
     public Droit getId_droit() {
@@ -37,6 +38,7 @@ public class Utilisateur_Droit_Server  implements Serializable {
     public void setId_droit(Droit id_droit) {
         this.id_droit = id_droit;
     }
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "no_utilisateur")
     public Utilisateur getNo_utilisateur() {

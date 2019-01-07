@@ -45,7 +45,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
   }
 
   private void send(String pseudo, String typeMessage, String message) {
-    this.message.add(new Message(pseudo, LocalDateTime.now(), typeMessage, message));
+    //this.message.add(new Message(pseudo, LocalDateTime.now(), typeMessage, message));
   }
 
   @Override
