@@ -17,7 +17,7 @@ public class testMenu {
     MenuInterface obj;
     try {
       obj = (MenuInterface) Naming.lookup("//" + Constante.IP + ":" + port + "/menu");
-      for (int i = 0; i < 5; i++) {
+      for (int i = 0; i < 7; i++) {
         int x = obj.createNewServer();
         System.out.println(x);
         if (x == -1) {

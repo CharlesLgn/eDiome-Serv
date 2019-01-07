@@ -67,7 +67,7 @@ public class ServerManager {
     ServerManager sm = new ServerManager();
     sm.setup();
     Server server = new Server();
-    server.setName("testu");
+    server.setName("Profs");
     UtilisateurManager um = new UtilisateurManager();
 
     um.setup();
