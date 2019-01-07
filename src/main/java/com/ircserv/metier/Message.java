@@ -2,6 +2,8 @@ package com.ircserv.metier;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -12,16 +14,16 @@ public class Message implements Serializable {
 
     private int id;
     private Server server;
-    private String typeMessage;
-    private LocalDateTime date;
+    private Timestamp date;
     private Utilisateur user;
     private String contenu;
+    private PieceJointe id_pj;
 
 
-    public Message(int id, Utilisateur user, String typeMessage, LocalDateTime date, String contenu, Server server) {
+    public Message(int id, Utilisateur user, Timestamp date, String contenu, Server server, PieceJointe id_pj) {
         this.id = id;
         this.user = user;
-        this.typeMessage = typeMessage;
+        this.id_pj = id_pj;
         this.date = date;
         this.contenu = contenu;
         this.server = server;
@@ -61,21 +63,13 @@ public class Message implements Serializable {
         this.server = server;
     }
 
-    @Column(name = "type_message")
-    public String getTypeMessage() {
-        return typeMessage;
-    }
-
-    public void setTypeMessage(String typeMessage) {
-        this.typeMessage = typeMessage;
-    }
 
     @Column(name = "date_envoi")
-    public LocalDateTime getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -83,6 +77,16 @@ public class Message implements Serializable {
     @Column(name = "corps_initial", columnDefinition = "LONGTEXT")
     public String getContenu() {
         return contenu;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pj")
+    public PieceJointe getId_pj() {
+        return id_pj;
+    }
+
+    public void setId_pj(PieceJointe id_pj) {
+        this.id_pj = id_pj;
     }
 
     public void setContenu(String contenu) {
@@ -94,16 +98,16 @@ public class Message implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
-        return id == message.id && Objects.equals(user, message.user) && Objects.equals(typeMessage, message.typeMessage) && Objects.equals(date, message.date) && Objects.equals(contenu, message.contenu) && Objects.equals(server, message.server);
+        return id == message.id && Objects.equals(user, message.user) && Objects.equals(id_pj, message.id_pj) && Objects.equals(date, message.date) && Objects.equals(contenu, message.contenu) && Objects.equals(server, message.server);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, typeMessage, date, contenu, server);
+        return Objects.hash(id, user, id_pj, date, contenu, server);
     }
 
     @Override
     public String toString() {
-        return "Message{" + "id=" + id + ", user=" + user + ", typeMessage='" + typeMessage + '\'' + ", date=" + date + ", contenu='" + contenu + '\'' + ", server=" + server + '}';
+        return "Message{" + "id=" + id + ", user=" + user + ", typeMessage='" + id_pj + '\'' + ", date=" + date + ", contenu='" + contenu + '\'' + ", server=" + server + '}';
     }
 }

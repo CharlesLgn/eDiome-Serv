@@ -1,19 +1,16 @@
 package com.ircserv.manager;
 
-import com.ircserv.metier.Droit;
-import com.ircserv.metier.Server;
-import com.ircserv.metier.Utilisateur;
-import com.ircserv.metier.Utilisateur_Droit_Server;
+import com.ircserv.metier.PieceJointe;
+import com.ircserv.metier.TypePieceJointe;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class Utilisateur_Droit_ServerManager {
+public class PieceJointeManager {
 
     protected SessionFactory sessionFactory;
-
     public void setup() {
         // code to load Hibernate Session factory
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
@@ -35,16 +32,25 @@ public class Utilisateur_Droit_ServerManager {
         sessionFactory.close();
     }
 
+    public PieceJointe readPJ(int id) {
+        // code to get a book
+        Session session = sessionFactory.openSession();
+
+        PieceJointe pj = session.get(PieceJointe.class, id);
+
+        return pj;
 
 
+    }
 
-    public void create(Utilisateur_Droit_Server uds) {
+
+    public void create(PieceJointe pj) {
 
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(uds);
+        session.save(pj);
 
         session.getTransaction().commit();
         session.close();
@@ -53,23 +59,19 @@ public class Utilisateur_Droit_ServerManager {
 
 
     public static void main(String[] args) {
-        UtilisateurManager um =  new UtilisateurManager();
-        ServerManager sm = new ServerManager();
-        DroitManager dm = new DroitManager();
-        Utilisateur_Droit_ServerManager udsm = new Utilisateur_Droit_ServerManager();
-        um.setup();
-        sm.setup();
-        dm.setup();
-        Utilisateur user = um.readUser(14);
-        Server server = sm.readServer(1);
-        Droit droit = dm.readDroit(1);
-        Utilisateur_Droit_Server usd = new Utilisateur_Droit_Server();
-        usd.setNo_utilisateur(user);
-        usd.setCode_serveur(server);
-        usd.setId_droit(droit);
-        udsm.setup();
-        udsm.create(usd);
+        TypePieceJointe tpj;
+        TypePieceJointeManager tpjm = new TypePieceJointeManager();
+        tpjm.setup();
+        tpj = tpjm.readTPJ(1);
+        PieceJointeManager pjm = new PieceJointeManager();
+        pjm.setup();
+        PieceJointe pj = new PieceJointe();
+        pj.setChemin("path");
+        pj.setId_type_pj(tpj);
+        pjm.create(pj);
+
 
     }
+
 
 }

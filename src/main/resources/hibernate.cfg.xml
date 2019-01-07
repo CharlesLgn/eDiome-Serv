@@ -6,7 +6,7 @@
     <session-factory>
         <!-- Database connection settings -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/irc?useSSL=false</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/irc2?useSSL=false</property>
         <property name="connection.username">root</property>
         <property name="connection.password"/>
         <property name="show_sql">true</property>
@@ -17,5 +17,7 @@
         <mapping class="com.ircserv.metier.Utilisateur_Server"/>
         <mapping class="com.ircserv.metier.Droit"/>
         <mapping class="com.ircserv.metier.Utilisateur_Droit_Server"/>
+        <mapping class="com.ircserv.metier.PieceJointe"/>
+        <mapping class="com.ircserv.metier.TypePieceJointe"/>
     </session-factory>
 </hibernate-configuration>
