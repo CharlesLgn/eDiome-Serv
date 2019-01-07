@@ -51,7 +51,6 @@ public class testUpload extends Application {
       File file = fileChooser.showOpenDialog(primaryStage);
       if (file != null) {
         byte[] data = FileUtils.readFileToByteArray(file);
-        obj.uploadFile("test", data, file.getName());
       }
 
     } catch (Exception e) {

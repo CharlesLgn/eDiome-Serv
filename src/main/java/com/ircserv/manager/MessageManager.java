@@ -9,7 +9,6 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +41,6 @@ public class MessageManager {
         return message;
     }
 
-
     public void create(Message message) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -58,8 +56,6 @@ public class MessageManager {
         List<Message> messages = query.list();
         return new ArrayList<>(messages);
     }
-
-
 
     public static void main(String[] args) {
         MessageManager messageManager = new MessageManager();

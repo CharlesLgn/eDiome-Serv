@@ -2,7 +2,12 @@ package com.ircserv.impl;
 
 import com.ircserv.contstante.Constante;
 import com.ircserv.inter.ServerInterface;
+import com.ircserv.manager.MessageManager;
+import com.ircserv.manager.ServerManager;
+import com.ircserv.manager.UtilisateurManager;
 import com.ircserv.metier.Message;
+import com.ircserv.metier.Server;
+import com.ircserv.metier.Utilisateur;
 import org.apache.commons.io.FileUtils;
 
 import java.io.ByteArrayInputStream;
@@ -23,7 +28,6 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     super(port);
     message = new ArrayList<>();
     this.numServ = numServ;
-    send("server", "server open !!");
   }
 
   @Override
@@ -44,17 +48,34 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     }
   }
 
-  private void send(String pseudo, String typeMessage, String message) {
-    //this.message.add(new Message(pseudo, LocalDateTime.now(), typeMessage, message));
+  private void send(int userId,int servId, String typeMessage, String message) {
+
+    ServerManager sm = new ServerManager();
+    sm.setup();
+    UtilisateurManager um = new UtilisateurManager();
+    um.setup();
+
+    Server server=sm.readServer(servId);
+    Utilisateur user = um.readUser(userId);
+
+    MessageManager messageManager = new MessageManager();
+    messageManager.setup();
+
+    Message message1 = new Message.MessageBuilder()
+                                 .setDate(LocalDateTime.now())
+                                 .setContenu(message)
+                                 .setUser(user).addServ(server).addTypeMessage(typeMessage).build();
+    this.message.add(message1);
+    messageManager.create(message1);
   }
 
   @Override
-  public void send(String pseudo, String message) {
-    send(pseudo, "message", message);
+  public void send(int userId, int servId, String message) {
+    send(userId, servId, "message", message);
   }
 
   @Override
-  public void uploadFile(String pseudo, byte[] data, String filename) {
+  public void uploadFile(int userId, int servId, byte[] data, String filename) {
     try {
       String content = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(data));
       String typeMessage;
@@ -77,7 +98,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
       } else {
         typeMessage = "file";
       }
-      send(pseudo, typeMessage, path);
+      send(userId, servId, typeMessage, path);
     } catch (IOException e) {
       e.printStackTrace();
     }

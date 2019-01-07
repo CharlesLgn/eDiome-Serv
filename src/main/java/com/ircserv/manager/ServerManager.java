@@ -1,4 +1,5 @@
 package com.ircserv.manager;
+
 import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
 import org.hibernate.Session;
@@ -18,8 +19,7 @@ public class ServerManager {
 
     public void setup() {
         // code to load Hibernate Session factory
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure() // configures settings from hibernate.cfg.xml
                 .build();
         try {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
@@ -62,20 +62,17 @@ public class ServerManager {
     }
 
 
-
     public static void main(String[] args) {
-    ServerManager sm = new ServerManager();
-    sm.setup();
-    Server server = new Server();
-    server.setName("testu");
-    UtilisateurManager um = new UtilisateurManager();
+        ServerManager sm = new ServerManager();
+        sm.setup();
+        Server server = new Server();
+        server.setName("testu");
+        UtilisateurManager um = new UtilisateurManager();
 
-    um.setup();
+        um.setup();
 
-    server.setCreateur(um.readUser(14));
-    sm.create(server);
-
-
+        server.setCreateur(um.readUser(14));
+        sm.create(server);
     }
 
 }

@@ -4,7 +4,7 @@ package com.ircserv.metier;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-
+import java.util.Objects;
 
 
 @Entity
@@ -101,6 +101,19 @@ public class Utilisateur implements Serializable {
 
     public void setTelephone_pro(String telephone_pro) {
         this.telephone_pro = telephone_pro;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Utilisateur that = (Utilisateur) o;
+        return noUtilisateur == that.noUtilisateur && Objects.equals(nom, that.nom) && Objects.equals(prenom, that.prenom) && Objects.equals(identifiant, that.identifiant) && Objects.equals(mot_de_passe, that.mot_de_passe) && Objects.equals(date_naissance, that.date_naissance) && Objects.equals(date_inscription, that.date_inscription) && Objects.equals(mail_pro, that.mail_pro) && Objects.equals(telephone_pro, that.telephone_pro);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(noUtilisateur, nom, prenom, identifiant, mot_de_passe, date_naissance, date_inscription, mail_pro, telephone_pro);
     }
 }
 
