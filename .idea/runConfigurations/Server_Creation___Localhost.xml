@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Server Creation - Localhost" type="Application" factoryName="Application" activateToolWindowBeforeRun="false">
     <option name="MAIN_CLASS_NAME" value="com.ircserv.testMenu" />
-    <module name="irc-serv" />
+    <module name="IRCServ" />
     <option name="PROGRAM_PARAMETERS" value="localhost" />
     <extension name="coverage">
       <pattern>

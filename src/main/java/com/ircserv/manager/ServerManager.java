@@ -2,6 +2,7 @@ package com.ircserv.manager;
 
 import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
+import com.ircserv.metier.Utilisateur_Server;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -52,11 +53,20 @@ public class ServerManager {
     public Server create(Server server) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Server server1 = readServer((int)session.save(server));
+        int noServer = (int)session.save(server);
 
         session.getTransaction().commit();
         session.close();
-        return server1;
+
+        Utilisateur_ServerManager usm = new Utilisateur_ServerManager();
+        Utilisateur_Server utilisateur_server = new Utilisateur_Server();
+        utilisateur_server.setCode_serveur(readServer(noServer));
+        utilisateur_server.setNo_utilisateur(server.getCreateur());
+
+        usm.setup();
+        usm.create(utilisateur_server);
+
+        return readServer(noServer);
     }
 
 

@@ -19,9 +19,6 @@ public class testServer {
             ArrayList<Message> messages = obj.getMessages();
             System.out.println(messages);
             int x = obj.getMessages().size()+1;
-
-
-
         } catch (MalformedURLException | RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
