@@ -53,7 +53,7 @@ public class XMLDataFinder {
     try {
       NodeList str = XPathFinder(pathServ, "//server[@id='"+id+"']/nom");
       String nom = str.item(0).getTextContent();
-      return new Server(id, nom);
+      return new Server();
     } catch (ParserConfigurationException | IOException | SAXException | XPathExpressionException e) {
       e.printStackTrace();
       return null;

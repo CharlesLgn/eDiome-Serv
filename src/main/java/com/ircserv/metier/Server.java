@@ -13,16 +13,16 @@ public class Server implements Serializable {
   private String name;
   private Utilisateur createur;
 
-  public Server(int id, String name) {
+  public Server(int id, String name, Utilisateur user) {
     this.id = id;
     this.name = name;
-
+    this.createur=user;
   }
 
   public Server() {}
 
-  public Server(String name) {
-    this(-1, name);
+  public Server(String name, Utilisateur user) {
+    this(-1, name, user);
   }
 
   @Id

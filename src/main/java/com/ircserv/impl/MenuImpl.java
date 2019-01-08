@@ -14,7 +14,6 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
@@ -27,13 +26,31 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     }
 
     @Override
-    public int createNewServer() throws RemoteException {
+    public int createNewServer() {
+        return createNewServer(numServ++);
+    }
+
+    @Override
+    public Server createNewServer(String name, int userId) {
+        UtilisateurManager um = new UtilisateurManager();
+        ServerManager sm = new ServerManager();
+        um.setup();
+        sm.setup();
+
+        Utilisateur user = um.readUser(userId);
+        Server serv = new Server(name, user);
+        Server noServ = sm.create(serv);
+        createNewServer(noServ.getId());
+        return noServ;
+    }
+
+    private int createNewServer(int numServ) {
         try {
             int port = Constante.PORT;
             LocateRegistry.getRegistry(port);
 
             Naming.rebind("//" + Constante.IP + ":" + port + "/serv" + numServ, new ServerImpl(port, numServ));
-            return numServ++;
+            return numServ;
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println("echec : " + e);
@@ -55,7 +72,7 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     }
 
     @Override
-    public List<Server> findServerByUser(int userId) throws RemoteException {
+    public List<Server> findServerByUser(int userId) {
         try {
             Utilisateur_ServerManager manager = new Utilisateur_ServerManager();
             UtilisateurManager uManager = new UtilisateurManager();
@@ -72,24 +89,21 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     }
 
     @Override
-    public int connect(String user, String psw) throws RemoteException {
+    public int connect(String user, String psw) {
         UtilisateurManager manager = new UtilisateurManager();
         manager.setup();
-        int res = manager.connexionCHeck(user, psw);
-
-        return res;
+        return manager.connexionCHeck(user, psw);
     }
 
     @Override
-    public String getUserName(int id) throws RemoteException {
+    public String getUserName(int id) {
         UtilisateurManager manager = new UtilisateurManager();
         return manager.read(id);
 
     }
 
     @Override
-    public int createUser(Utilisateur user) throws RemoteException {
-
+    public int createUser(Utilisateur user) {
         try {
             UtilisateurManager manager = new UtilisateurManager();
             manager.setup();

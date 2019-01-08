@@ -49,16 +49,14 @@ public class ServerManager {
     }
 
 
-    public void create(Server server) {
-
-
+    public Server create(Server server) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
-        session.save(server);
+        Server server1 = readServer((int)session.save(server));
 
         session.getTransaction().commit();
         session.close();
+        return server1;
     }
 
 
@@ -68,11 +66,6 @@ public class ServerManager {
         Server server = new Server();
         server.setName("Profs");
         UtilisateurManager um = new UtilisateurManager();
-
-        um.setup();
-
-        server.setCreateur(um.readUser(14));
-        sm.create(server);
 
         um.setup();
 
