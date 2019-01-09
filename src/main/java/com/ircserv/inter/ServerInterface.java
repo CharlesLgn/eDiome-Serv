@@ -1,6 +1,7 @@
 package com.ircserv.inter;
 
 import com.ircserv.metier.Message;
+import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
 
 import java.rmi.Remote;
@@ -15,4 +16,5 @@ public interface ServerInterface extends Remote{
     void uploadFile(int userId, int servId, byte[] data, String filename) throws RemoteException;
     List<Utilisateur> getAllUserNotInServer() throws RemoteException;
     List<Utilisateur> getAllUserInServer() throws RemoteException;
+    void linkUserToServer(Utilisateur utilisateur) throws RemoteException;
 }
