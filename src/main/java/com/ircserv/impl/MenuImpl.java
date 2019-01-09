@@ -114,11 +114,11 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
             Utilisateur_ServerManager usm = new Utilisateur_ServerManager();
             usm.setup();
             Utilisateur_Server us = new Utilisateur_Server();
-            us.setNo_utilisateur(user);
-            us.setCode_serveur(sm.readServer(1));
+            us.setUser(user);
+            us.setServer(sm.readServer(1));
             usm.create(us);
 
-            return user.getNoUtilisateur();
+            return user.getId();
         } catch (Exception e) {
             e.printStackTrace();
             return -1;

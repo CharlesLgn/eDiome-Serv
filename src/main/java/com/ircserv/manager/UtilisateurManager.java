@@ -9,7 +9,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
 import java.sql.Date;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -39,8 +38,8 @@ public class UtilisateurManager {
 
     public void create(Utilisateur user) {
         // code to save a book
-        user.setDate_inscription(new Date(System.currentTimeMillis()));
-        user.setDate_naissance(new Date(System.currentTimeMillis()));
+        user.setRegistrationDate(new Date(System.currentTimeMillis()));
+        user.setBirthDate(new Date(System.currentTimeMillis()));
 
 
         Session session = sessionFactory.openSession();
@@ -68,14 +67,14 @@ public class UtilisateurManager {
     public int connexionCHeck(String pseudo, String mdp) {
         // code to get a book
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("select user from Utilisateur as user where identifiant = :pseudo and mot_de_passe = :mdp");
+        Query query = session.createQuery("select user from Utilisateur as user where identifiant = :pseudo and password = :mdp");
         query.setParameter("pseudo", pseudo);
         query.setParameter("mdp", mdp);
         List users = query.list();
         for (int i = 0; i < users.size(); i++) {
             try {
                 Utilisateur user = (Utilisateur) (users.get(i));
-                int id = user.getNoUtilisateur();
+                int id = user.getId();
                 return id;
             } catch (Exception e) {
                 e.printStackTrace();

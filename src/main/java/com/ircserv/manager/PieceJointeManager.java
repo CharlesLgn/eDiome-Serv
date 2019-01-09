@@ -67,7 +67,7 @@ public class PieceJointeManager {
         pjm.setup();
         PieceJointe pj = new PieceJointe();
         pj.setChemin("path");
-        pj.setId_type_pj(tpj);
+        pj.setTypePieceJointe(tpj);
         pjm.create(pj);
     }
 

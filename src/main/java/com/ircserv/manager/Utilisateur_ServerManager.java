@@ -49,7 +49,7 @@ public class Utilisateur_ServerManager {
 
     public List<Server> getServerByUser(Utilisateur user) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("SELECT userServer.code_serveur from Utilisateur_Server as userServer where userServer.no_utilisateur = :user");
+        Query query = session.createQuery("SELECT userServer.server from Utilisateur_Server as userServer where userServer.user = :user");
         query.setParameter("user", user);
         List<Server> servers = query.list();
         return new ArrayList<>(servers);
@@ -70,8 +70,8 @@ public class Utilisateur_ServerManager {
         Utilisateur user = um.readUser(14);
         Utilisateur_ServerManager usm = new Utilisateur_ServerManager();
         Utilisateur_Server us = new Utilisateur_Server();
-        us.setCode_serveur(server);
-        us.setNo_utilisateur(user);
+        us.setServer(server);
+        us.setUser(user);
         usm.setup();
         usm.create(us);
         sm.create(server);

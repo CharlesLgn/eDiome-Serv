@@ -64,9 +64,9 @@ public class Utilisateur_Droit_ServerManager {
         Server server = sm.readServer(1);
         Droit droit = dm.readDroit(1);
         Utilisateur_Droit_Server usd = new Utilisateur_Droit_Server();
-        usd.setNo_utilisateur(user);
-        usd.setCode_serveur(server);
-        usd.setId_droit(droit);
+        usd.setUser(user);
+        usd.setServeur(server);
+        usd.setDroit(droit);
         udsm.setup();
         udsm.create(usd);
 

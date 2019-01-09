@@ -8,14 +8,14 @@ import java.io.Serializable;
 @Table(name = "droit_utilisateur")
 public class Utilisateur_Droit_Server  implements Serializable {
 
-    int id;
-    Droit id_droit;
-    Utilisateur no_utilisateur;
-    Server code_serveur;
+    private int id;
+    private Droit droit;
+    private Utilisateur user;
+    private Server serveur;
 
     public Utilisateur_Droit_Server() {
+        this.id = -1;
     }
-
 
     @Id
     @Column(name = "id")
@@ -30,32 +30,32 @@ public class Utilisateur_Droit_Server  implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_droit")
-    public Droit getId_droit() {
-        return id_droit;
+    public Droit getDroit() {
+        return droit;
     }
 
 
-    public void setId_droit(Droit id_droit) {
-        this.id_droit = id_droit;
+    public void setDroit(Droit droit) {
+        this.droit = droit;
     }
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "no_utilisateur")
-    public Utilisateur getNo_utilisateur() {
-        return no_utilisateur;
+    public Utilisateur getUser() {
+        return user;
     }
 
-    public void setNo_utilisateur(Utilisateur no_utilisateur) {
-        this.no_utilisateur = no_utilisateur;
+    public void setUser(Utilisateur user) {
+        this.user = user;
     }
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "code_serveur")
-    public Server getCode_serveur() {
-        return code_serveur;
+    public Server getServeur() {
+        return serveur;
     }
 
-    public void setCode_serveur(Server code_serveur) {
-        this.code_serveur = code_serveur;
+    public void setServeur(Server serveur) {
+        this.serveur = serveur;
     }
 }

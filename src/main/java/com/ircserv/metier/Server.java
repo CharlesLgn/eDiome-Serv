@@ -19,7 +19,9 @@ public class Server implements Serializable {
     this.createur=user;
   }
 
-  public Server() {}
+  public Server() {
+    this.id=-1;
+  }
 
   public Server(String name, Utilisateur user) {
     this(-1, name, user);

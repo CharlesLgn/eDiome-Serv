@@ -3,7 +3,6 @@ package com.ircserv.metier;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -16,19 +15,21 @@ public class Message implements Serializable {
     private Timestamp date;
     private Utilisateur user;
     private String contenu;
-    private PieceJointe id_pj;
+    private PieceJointe pieceJointe;
 
 
-    public Message(int id, Utilisateur user, Timestamp date, String contenu, Server server, PieceJointe id_pj) {
+    public Message(int id, Utilisateur user, Timestamp date, String contenu, Server server, PieceJointe pieceJointe) {
         this.id = id;
         this.user = user;
-        this.id_pj = id_pj;
+        this.pieceJointe = pieceJointe;
         this.date = date;
         this.contenu = contenu;
         this.server = server;
     }
 
-    public Message(){}
+    public Message(){
+        this.id=-1;
+    }
 
     @Id
     @Column(name = "id_message")
@@ -80,12 +81,12 @@ public class Message implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pj")
-    public PieceJointe getId_pj() {
-        return id_pj;
+    public PieceJointe getPieceJointe() {
+        return pieceJointe;
     }
 
-    public void setId_pj(PieceJointe id_pj) {
-        this.id_pj = id_pj;
+    public void setPieceJointe(PieceJointe pieceJointe) {
+        this.pieceJointe = pieceJointe;
     }
 
     public void setContenu(String contenu) {
@@ -94,7 +95,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" + "id=" + id + ", user=" + user + ", typeMessage='" + id_pj + '\'' + ", date=" + date + ", contenu='" + contenu + '\'' + ", server=" + server + '}';
+        return "Message{" + "id=" + id + ", user=" + user + ", typeMessage='" + pieceJointe + '\'' + ", date=" + date + ", contenu='" + contenu + '\'' + ", server=" + server + '}';
     }
 
     public static class MessageBuilder {
@@ -144,7 +145,7 @@ public class Message implements Serializable {
 
             message.id          = this.id;
             message.server      = this.server;
-            message.id_pj       = this.id_pj;
+            message.pieceJointe = this.id_pj;
             message.date        = this.date;
             message.user        = this.user;
             message.contenu     = this.contenu;
@@ -163,6 +164,6 @@ public class Message implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, server, date, user, contenu, id_pj);
+        return Objects.hash(id, server, date, user, contenu, pieceJointe);
     }
 }
