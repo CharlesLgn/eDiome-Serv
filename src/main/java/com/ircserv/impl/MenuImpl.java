@@ -32,16 +32,21 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
 
     @Override
     public Server createNewServer(String name, int userId) {
-        UtilisateurManager um = new UtilisateurManager();
-        ServerManager sm = new ServerManager();
-        um.setup();
-        sm.setup();
+        try {
+            UtilisateurManager um = new UtilisateurManager();
+            ServerManager sm = new ServerManager();
+            um.setup();
+            sm.setup();
 
-        Utilisateur user = um.readUser(userId);
-        Server serv = new Server(name, user);
-        Server noServ = sm.create(serv);
-        createNewServer(noServ.getId());
-        return noServ;
+            Utilisateur user = um.readUser(userId);
+            Server serv = new Server(name, user);
+            Server noServ = sm.create(serv);
+            createNewServer(noServ.getId());
+            return noServ;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private int createNewServer(int numServ) {
