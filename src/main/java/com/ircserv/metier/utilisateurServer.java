@@ -1,19 +1,18 @@
 package com.ircserv.metier;
 
-import javax.persistence.*;
+
 import java.io.Serializable;
+import javax.persistence.*;
 
 
 @Entity
-@Table(name = "droit_utilisateur")
-public class Utilisateur_Droit_Server  implements Serializable {
-
+@Table(name = "utilisateur_serveur")
+public class utilisateurServer implements Serializable {
     private int id;
-    private Droit droit;
     private Utilisateur user;
-    private Server serveur;
+    private Server server;
 
-    public Utilisateur_Droit_Server() {
+    public utilisateurServer() {
         this.id = -1;
     }
 
@@ -29,17 +28,6 @@ public class Utilisateur_Droit_Server  implements Serializable {
     }
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_droit")
-    public Droit getDroit() {
-        return droit;
-    }
-
-
-    public void setDroit(Droit droit) {
-        this.droit = droit;
-    }
-
-    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "no_utilisateur")
     public Utilisateur getUser() {
         return user;
@@ -51,11 +39,13 @@ public class Utilisateur_Droit_Server  implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "code_serveur")
-    public Server getServeur() {
-        return serveur;
+    public Server getServer() {
+        return server;
     }
 
-    public void setServeur(Server serveur) {
-        this.serveur = serveur;
+    public void setServer(Server server) {
+        this.server = server;
     }
+
+
 }

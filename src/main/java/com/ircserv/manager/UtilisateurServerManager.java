@@ -1,23 +1,24 @@
 package com.ircserv.manager;
 
-import com.ircserv.metier.Droit;
 import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
-import com.ircserv.metier.Utilisateur_Droit_Server;
+import com.ircserv.metier.utilisateurServer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 
-public class Utilisateur_Droit_ServerManager {
+import java.util.ArrayList;
+import java.util.List;
 
+public class UtilisateurServerManager {
     protected SessionFactory sessionFactory;
 
     public void setup() {
         // code to load Hibernate Session factory
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure() // configures settings from hibernate.cfg.xml
                 .build();
         try {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
@@ -36,39 +37,45 @@ public class Utilisateur_Droit_ServerManager {
     }
 
 
-
-
-    public void create(Utilisateur_Droit_Server uds) {
-
-
+    public void create(utilisateurServer userver) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(uds);
+        session.save(userver);
 
         session.getTransaction().commit();
         session.close();
     }
 
+    public List<Server> getServerByUser(Utilisateur user) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("SELECT userServer.server from utilisateurServer as userServer where userServer.user = :user");
+        query.setParameter("user", user);
+        List<Server> servers = query.list();
+        return new ArrayList<>(servers);
+    }
 
+    public void getUserByServer(Server server) {
+
+    }
 
     public static void main(String[] args) {
-        UtilisateurManager um =  new UtilisateurManager();
         ServerManager sm = new ServerManager();
-        DroitManager dm = new DroitManager();
-        Utilisateur_Droit_ServerManager udsm = new Utilisateur_Droit_ServerManager();
-        um.setup();
         sm.setup();
-        dm.setup();
+        Server server = sm.readServer(5);
+        UtilisateurManager um = new UtilisateurManager();
+
+        um.setup();
+
         Utilisateur user = um.readUser(14);
-        Server server = sm.readServer(1);
-        Droit droit = dm.readDroit(1);
-        Utilisateur_Droit_Server usd = new Utilisateur_Droit_Server();
-        usd.setUser(user);
-        usd.setServeur(server);
-        usd.setDroit(droit);
-        udsm.setup();
-        udsm.create(usd);
+        UtilisateurServerManager usm = new UtilisateurServerManager();
+        utilisateurServer us = new utilisateurServer();
+        us.setServer(server);
+        us.setUser(user);
+        usm.setup();
+        usm.create(us);
+        sm.create(server);
+
 
     }
 

@@ -1,18 +1,12 @@
 package com.ircserv.manager;
 
 import com.ircserv.metier.Server;
-import com.ircserv.metier.Utilisateur;
-import com.ircserv.metier.Utilisateur_Server;
+import com.ircserv.metier.utilisateurServer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.query.Query;
-
-import java.sql.Date;
-import java.util.Iterator;
-import java.util.List;
 
 
 public class ServerManager {
@@ -58,10 +52,10 @@ public class ServerManager {
         session.getTransaction().commit();
         session.close();
 
-        Utilisateur_ServerManager usm = new Utilisateur_ServerManager();
-        Utilisateur_Server utilisateur_server = new Utilisateur_Server();
-        utilisateur_server.setCode_serveur(readServer(noServer));
-        utilisateur_server.setNo_utilisateur(server.getCreateur());
+        UtilisateurServerManager usm = new UtilisateurServerManager();
+        utilisateurServer utilisateur_server = new utilisateurServer();
+        utilisateur_server.setServer(readServer(noServer));
+        utilisateur_server.setUser(server.getCreateur());
 
         usm.setup();
         usm.create(utilisateur_server);
