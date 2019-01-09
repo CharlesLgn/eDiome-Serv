@@ -1,5 +1,6 @@
 package com.ircserv.inter;
 
+import com.ircserv.metier.Droit;
 import com.ircserv.metier.Message;
 import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
@@ -17,4 +18,5 @@ public interface ServerInterface extends Remote{
     List<Utilisateur> getAllUserNotInServer() throws RemoteException;
     List<Utilisateur> getAllUserInServer() throws RemoteException;
     void linkUserToServer(Utilisateur utilisateur) throws RemoteException;
+    Droit getDroit(Utilisateur utilisateur) throws RemoteException;
 }

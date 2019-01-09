@@ -126,10 +126,21 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     usm.create(utilisateurServer);
   }
 
+  @Override
+  public Droit getDroit(Utilisateur utilisateur) {
+    Server server = getServ();
+    UtilisateurServer utilisateurServer = new UtilisateurServer();
+    utilisateurServer.setServer(server);
+    utilisateurServer.setUser(utilisateur);
+
+    UtilisateurDroitServerManager udsm = new UtilisateurDroitServerManager();
+    udsm.setup();
+    return udsm.getDroit(server, utilisateur);
+  }
+
   private Server getServ(){
     ServerManager serverManager = new ServerManager();
     serverManager.setup();
     return serverManager.readServer(numServ);
-
   }
 }

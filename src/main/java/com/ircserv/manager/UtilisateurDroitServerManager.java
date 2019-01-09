@@ -1,13 +1,13 @@
 package com.ircserv.manager;
 
-import com.ircserv.metier.Droit;
-import com.ircserv.metier.Server;
-import com.ircserv.metier.Utilisateur;
-import com.ircserv.metier.UtilisateurDroitServer;
+import com.ircserv.metier.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
-public class utilisateurDroitServerManager {
+import java.util.List;
+
+public class UtilisateurDroitServerManager {
 
     protected SessionFactory sessionFactory;
 
@@ -21,9 +21,6 @@ public class utilisateurDroitServerManager {
         // code to close Hibernate Session factory
         sessionFactory.close();
     }
-
-
-
 
     public void create(UtilisateurDroitServer uds) {
 
@@ -51,13 +48,30 @@ public class utilisateurDroitServerManager {
         session.close();
     }
 
+    public Droit getDroit(Server server, Utilisateur utilisateur){
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from UtilisateurDroitServer as userServDroit where userServDroit.user = :user and userServDroit.serveur = :serv");
+        query.setParameter("user", utilisateur);
+        query.setParameter("serv", server);
+        List<UtilisateurDroitServer> userServer = query.list();
+        for (int i = 0; i < userServer.size(); i++) {
+            try {
+                UtilisateurDroitServer user = userServer.get(i);
+                return user.getDroit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return new Droit();
+    }
+
 
 
     public static void main(String[] args) {
         UtilisateurManager um =  new UtilisateurManager();
         ServerManager sm = new ServerManager();
         DroitManager dm = new DroitManager();
-        utilisateurDroitServerManager udsm = new utilisateurDroitServerManager();
+        UtilisateurDroitServerManager udsm = new UtilisateurDroitServerManager();
         um.setup();
         sm.setup();
         dm.setup();
