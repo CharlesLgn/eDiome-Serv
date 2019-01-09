@@ -1,5 +1,6 @@
 package com.ircserv.manager;
 
+import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,18 +18,8 @@ public class UtilisateurManager {
 
     public void setup() {
         // code to load Hibernate Session factory
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
-                .build();
-        try {
-            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        } catch (Exception ex) {
-            StandardServiceRegistryBuilder.destroy(registry);
-        }
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.getTransaction().commit();
-        session.close();
+        HibernateUtils hibernateUtils = new HibernateUtils();
+        sessionFactory = hibernateUtils.setup(sessionFactory);
     }
 
     protected void exit() {
@@ -42,9 +33,7 @@ public class UtilisateurManager {
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         int res = (int)session.save(user);
-
         session.getTransaction().commit();
         session.close();
         return res;
@@ -58,13 +47,11 @@ public class UtilisateurManager {
     }
 
     public Utilisateur readUser(int id) {
-        // code to get a book
         Session session = sessionFactory.openSession();
         return session.get(Utilisateur.class, id);
     }
 
     public int connexionCHeck(String pseudo, String mdp) {
-        // code to get a book
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("select user from Utilisateur as user where identifiant = :pseudo and password = :mdp");
         query.setParameter("pseudo", pseudo);
@@ -80,21 +67,41 @@ public class UtilisateurManager {
             }
         }
         return -1;
-
-
     }
 
-    protected void delete(int idUser) {
+    public List<Utilisateur> readAllUser() {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select user from Utilisateur as user");
+        List users = query.list();
+        return users;
+    }
 
+    public List<Utilisateur> readAllUserNotInServer(Server server) {
+        return readSpecificUser(server, "select user from Utilisateur as user where user not in" +
+                    "(select userServer.user from UtilisateurServer  as userServer where userServer.server = :serv)");
+    }
+
+    public List<Utilisateur> readAllUserInServer(Server server) {
+        return readSpecificUser(server,
+                "select userServer.user from UtilisateurServer  as userServer where userServer.server = :serv");
+    }
+
+    private List<Utilisateur> readSpecificUser(Server server, String request){
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery(request);
+        query.setParameter("serv", server);
+        List users = query.list();
+        return users;
+    }
+
+
+    protected void delete(int idUser) {
          // code to remove a book
          Utilisateur user = new Utilisateur();
          user.setId(idUser);
-
          Session session = sessionFactory.openSession();
          session.beginTransaction();
-
          session.delete(user);
-
          session.getTransaction().commit();
          session.close();
     }
@@ -103,7 +110,6 @@ public class UtilisateurManager {
         UtilisateurManager um =  new UtilisateurManager();
         um.setup();
         um.delete(22);
-
     }
 
 }

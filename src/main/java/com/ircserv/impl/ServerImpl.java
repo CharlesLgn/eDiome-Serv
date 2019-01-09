@@ -12,6 +12,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
@@ -49,15 +50,13 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     UtilisateurManager um = new UtilisateurManager();
     um.setup();
 
-    Server server=sm.readServer(servId);
+    Server server = sm.readServer(servId);
     Utilisateur user = um.readUser(userId);
 
     MessageManager messageManager = new MessageManager();
     messageManager.setup();
 
-    Message message1 = new Message.MessageBuilder()
-                                 .setContenu(message).setDate(Timestamp.from(Instant.now()))
-                                 .setUser(user).addServ(server).addPieceJointe(pieceJointe).build();
+    Message message1 = new Message.MessageBuilder().setContenu(message).setDate(Timestamp.from(Instant.now())).setUser(user).addServ(server).addPieceJointe(pieceJointe).build();
     this.message.add(message1);
     messageManager.create(message1);
   }
@@ -70,8 +69,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
   @Override
   public void uploadFile(int userId, int servId, byte[] data, String filename) {
     try {
-      filename = filename.replaceAll(" ","_");
-      File file = new File("../data/server"+numServ+"/"+filename);
+      filename = filename.replaceAll(" ", "_");
+      File file = new File("../data/server" + numServ + "/" + filename);
       System.out.println(file.getAbsolutePath().replace(" ", "?"));
       FileUtils.writeByteArrayToFile(file, data);
       String path = file.getPath();
@@ -81,7 +80,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
       TypePieceJointeManager tpjm = new TypePieceJointeManager();
       tpjm.setup();
       TypePieceJointe tpj = tpjm.getPJbyExtension(extension);
-      if (tpj.getLibelle() == null){
+      if (tpj.getLibelle() == null) {
         tpj.setExtension(extension);
         tpj.setLibelle("file");
         tpjm.create(tpj);
@@ -95,11 +94,30 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
       PieceJointe pj = new PieceJointe(path, tpj);
       pjm.create(pj);
 
-      send(userId, servId,"", pj);
+      send(userId, servId, "", pj);
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
+  @Override
+  public List<Utilisateur> getAllUserNotInServer() {
+    UtilisateurManager utilisateurManager = new UtilisateurManager();
+    utilisateurManager.setup();
+    return utilisateurManager.readAllUserNotInServer(getServ());
+  }
 
+  @Override
+  public List<Utilisateur> getAllUserInServer() {
+    UtilisateurManager utilisateurManager = new UtilisateurManager();
+    utilisateurManager.setup();
+    return utilisateurManager.readAllUserNotInServer(getServ());
+  }
+
+  private Server getServ(){
+    ServerManager serverManager = new ServerManager();
+    serverManager.setup();
+    return serverManager.readServer(numServ);
+
+  }
 }

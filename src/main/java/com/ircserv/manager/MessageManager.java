@@ -1,6 +1,7 @@
 package com.ircserv.manager;
 
 import com.ircserv.metier.Message;
+import com.ircserv.metier.PieceJointe;
 import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
 import org.hibernate.Session;
@@ -19,18 +20,8 @@ public class MessageManager {
 
     public void setup() {
         // code to load Hibernate Session factory
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
-                .build();
-        try {
-            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        } catch (Exception ex) {
-            StandardServiceRegistryBuilder.destroy(registry);
-        }
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.getTransaction().commit();
-        session.close();
+        HibernateUtils hibernateUtils = new HibernateUtils();
+        sessionFactory = hibernateUtils.setup(sessionFactory);
     }
 
     protected void exit() {
@@ -55,18 +46,6 @@ public class MessageManager {
         }
     }
 
-    public void createWithoutPj(Message message) {
-        try {
-            Session session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.save(message);
-            session.getTransaction().commit();
-            session.close();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     public List<Message> getMessagesByServ(Server server){
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("from Message as message where message.server = :server");
@@ -76,15 +55,12 @@ public class MessageManager {
     }
 
     protected void delete(int id) {
-
         // code to remove a book
         Message msg = new Message();
         msg.setId(id);
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         session.delete(msg);
-
         session.getTransaction().commit();
         session.close();
     }
@@ -95,6 +71,7 @@ public class MessageManager {
 
         UtilisateurManager um = new UtilisateurManager();
         um.setup();
+        um.readUser(1);
         Utilisateur user = um.readUser(14);
         ServerManager sm = new ServerManager();
         sm.setup();
@@ -104,11 +81,10 @@ public class MessageManager {
         msg.setDate(new Timestamp(System.currentTimeMillis()));
         msg.setServer(server);
         msg.setUser(user);
+        PieceJointeManager pieceJointeManager = new PieceJointeManager();
+        pieceJointeManager.setup();
+
+        msg.setPieceJointe(pieceJointeManager.readPJ(1));
         messageManager.create(msg);
-
-        PieceJointeManager pj = new PieceJointeManager();
-
-
-
     }
 }

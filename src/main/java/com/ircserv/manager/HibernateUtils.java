@@ -9,7 +9,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 public class HibernateUtils {
     public HibernateUtils(){}
 
-    public void setup(SessionFactory sessionFactory) {
+    public SessionFactory setup(SessionFactory sessionFactory) {
         // code to load Hibernate Session factory
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
@@ -23,5 +23,6 @@ public class HibernateUtils {
         session.beginTransaction();
         session.getTransaction().commit();
         session.close();
+        return sessionFactory;
     }
 }
