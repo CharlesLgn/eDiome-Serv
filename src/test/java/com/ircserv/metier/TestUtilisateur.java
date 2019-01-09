@@ -176,7 +176,7 @@ public class TestUtilisateur implements Serializable {
     public void getBirthDate_casDonne(){
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setBirthDate(new Date(1));
-        assertEquals(utilisateur.getRegistrationDate(), new Date(1));
+        assertEquals(utilisateur.getBirthDate(), new Date(1));
     }
 
     /**___RegistrationDate___**/

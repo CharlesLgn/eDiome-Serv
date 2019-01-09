@@ -11,7 +11,7 @@ import static org.junit.Assert.assertNull;
 public class TestUtilisateurDroitServer implements Serializable {
     @Test
     public void contructor_casNull(){
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         assertNull(utilisateurDroitServer.getDroit());
         assertNull(utilisateurDroitServer.getServeur());
         assertNull(utilisateurDroitServer.getUser());
@@ -20,7 +20,7 @@ public class TestUtilisateurDroitServer implements Serializable {
 
     @Test
     public void getId(){
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         utilisateurDroitServer.setId(2);
         assertEquals(utilisateurDroitServer.getId(), 2);
     }
@@ -28,14 +28,14 @@ public class TestUtilisateurDroitServer implements Serializable {
     /**___Droit___**/
     @Test
     public void getDroit_casNull(){
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         utilisateurDroitServer.setDroit(null);
         assertNull(utilisateurDroitServer.getDroit());
     }
 
     @Test
     public void getDroit_casVide(){
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         utilisateurDroitServer.setDroit(new Droit());
         assertEquals(utilisateurDroitServer.getDroit(), new Droit());
     }
@@ -45,7 +45,7 @@ public class TestUtilisateurDroitServer implements Serializable {
         Droit droit = new Droit();
         droit.setLibelle("dd");
 
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         utilisateurDroitServer.setDroit(droit);
         assertEquals(utilisateurDroitServer.getDroit(), droit);
     }
@@ -54,14 +54,14 @@ public class TestUtilisateurDroitServer implements Serializable {
     /**___Utilisateur___**/
     @Test
     public void getUtilisateur_casNull(){
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         utilisateurDroitServer.setUser(null);
         assertNull(utilisateurDroitServer.getUser());
     }
 
     @Test
     public void getUtilisateur_casVide(){
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         utilisateurDroitServer.setUser(new Utilisateur());
         assertEquals(utilisateurDroitServer.getUser(), new Utilisateur());
     }
@@ -71,7 +71,7 @@ public class TestUtilisateurDroitServer implements Serializable {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setIdentifiant("dd");
 
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         utilisateurDroitServer.setUser(utilisateur);
         assertEquals(utilisateurDroitServer.getUser(), utilisateur);
     }
@@ -79,14 +79,14 @@ public class TestUtilisateurDroitServer implements Serializable {
     /**___Server___**/
     @Test
     public void getServer_casNull(){
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         utilisateurDroitServer.setServeur(null);
         assertNull(utilisateurDroitServer.getServeur());
     }
 
     @Test
     public void getServer_casVide(){
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         utilisateurDroitServer.setServeur(new Server());
         assertEquals(utilisateurDroitServer.getServeur(), new Server());
     }
@@ -96,7 +96,7 @@ public class TestUtilisateurDroitServer implements Serializable {
         Server server = new Server();
         server.setName("dd");
 
-        Utilisateur_Droit_Server utilisateurDroitServer = new Utilisateur_Droit_Server();
+        UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
         utilisateurDroitServer.setServeur(server);
         assertEquals(utilisateurDroitServer.getServeur(), server);
     }

@@ -3,7 +3,7 @@ package com.ircserv.manager;
 import com.ircserv.metier.PieceJointe;
 import com.ircserv.metier.Server;
 import com.ircserv.metier.TypePieceJointe;
-import com.ircserv.metier.Utilisateur_Droit_Server;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;

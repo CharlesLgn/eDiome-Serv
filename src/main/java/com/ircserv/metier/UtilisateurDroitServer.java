@@ -6,14 +6,14 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "droit_utilisateur")
-public class Utilisateur_Droit_Server  implements Serializable {
+public class UtilisateurDroitServer implements Serializable {
 
     private int id;
     private Droit droit;
     private Utilisateur user;
     private Server serveur;
 
-    public Utilisateur_Droit_Server() {
+    public UtilisateurDroitServer() {
         this.id = -1;
     }
 

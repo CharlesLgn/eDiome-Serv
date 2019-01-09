@@ -1,9 +1,6 @@
 package com.ircserv.manager;
 
-import com.ircserv.metier.Droit;
-import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
-import com.ircserv.metier.Utilisateur_Droit_Server;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -39,19 +36,18 @@ public class UtilisateurManager {
         sessionFactory.close();
     }
 
-    public void create(Utilisateur user) {
+    public int create(Utilisateur user) {
         // code to save a book
         user.setRegistrationDate(new Date(System.currentTimeMillis()));
-        user.setBirthDate(new Date(System.currentTimeMillis()));
-
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(user);
+        int res = (int)session.save(user);
 
         session.getTransaction().commit();
         session.close();
+        return res;
     }
 
     public String read(int id) {

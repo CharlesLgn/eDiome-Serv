@@ -1,20 +1,24 @@
 package com.ircserv.manager;
 
-import com.ircserv.metier.*;
+import com.ircserv.metier.Server;
+import com.ircserv.metier.Utilisateur;
+import com.ircserv.metier.UtilisateurServer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 
-public class Utilisateur_Droit_ServerManager {
+import java.util.ArrayList;
+import java.util.List;
 
+public class UtilisateurServerManager {
     protected SessionFactory sessionFactory;
 
     public void setup() {
         // code to load Hibernate Session factory
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure() // configures settings from hibernate.cfg.xml
                 .build();
         try {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
@@ -33,42 +37,42 @@ public class Utilisateur_Droit_ServerManager {
     }
 
 
-
-
-    public void create(Utilisateur_Droit_Server uds) {
-
-
+    public void create(UtilisateurServer userver) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(uds);
+        session.save(userver);
 
         session.getTransaction().commit();
         session.close();
     }
 
-    protected void delete(int id) {
+    public List<Server> getServerByUser(Utilisateur user) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("SELECT userServer.server from UtilisateurServer as userServer where userServer.user = :user");
+        query.setParameter("user", user);
+        List<Server> servers = query.list();
+        return new ArrayList<>(servers);
+    }
+
+    public void getUserByServer(Server server) {
+
+    }
+
+    protected void delete(int idUs) {
 
         // code to remove a book
-        Utilisateur_Droit_Server uds = new Utilisateur_Droit_Server();
-        uds.setId(id);
+        UtilisateurServer us = new UtilisateurServer();
+        us.setId(idUs);
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.delete(uds);
+        session.delete(us);
 
         session.getTransaction().commit();
         session.close();
     }
 
 
-
-    public static void main(String[] args) {
-
-        Utilisateur_Droit_ServerManager udsm = new Utilisateur_Droit_ServerManager();
-        udsm.setup();
-        udsm.delete(1);
-
-    }
 
 }

@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNull;
 public class TestUtilisateur_Server implements Serializable {
     @Test
     public void contructor_casNull(){
-        Utilisateur_Server utilisateurServer= new Utilisateur_Server();
+        UtilisateurServer utilisateurServer= new UtilisateurServer();
         assertNull(utilisateurServer.getServer());
         assertNull(utilisateurServer.getUser());
         assertEquals(utilisateurServer.getId(),-1);
@@ -20,7 +20,7 @@ public class TestUtilisateur_Server implements Serializable {
 
     @Test
     public void getId(){
-        Utilisateur_Server utilisateurServer= new Utilisateur_Server();
+        UtilisateurServer utilisateurServer= new UtilisateurServer();
         utilisateurServer.setId(2);
         assertEquals(utilisateurServer.getId(), 2);
     }
@@ -28,14 +28,14 @@ public class TestUtilisateur_Server implements Serializable {
     /**___Utilisateur___**/
     @Test
     public void getUtilisateur_casNull(){
-        Utilisateur_Server utilisateurServer= new Utilisateur_Server();
+        UtilisateurServer utilisateurServer= new UtilisateurServer();
         utilisateurServer.setUser(null);
         assertNull(utilisateurServer.getUser());
     }
 
     @Test
     public void getUtilisateur_casVide(){
-        Utilisateur_Server utilisateurServer= new Utilisateur_Server();
+        UtilisateurServer utilisateurServer= new UtilisateurServer();
         utilisateurServer.setUser(new Utilisateur());
         assertEquals(utilisateurServer.getUser(), new Utilisateur());
     }
@@ -45,7 +45,7 @@ public class TestUtilisateur_Server implements Serializable {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setIdentifiant("dd");
 
-        Utilisateur_Server utilisateurServer= new Utilisateur_Server();
+        UtilisateurServer utilisateurServer= new UtilisateurServer();
         utilisateurServer.setUser(utilisateur);
         assertEquals(utilisateurServer.getUser(), utilisateur);
     }
@@ -53,14 +53,14 @@ public class TestUtilisateur_Server implements Serializable {
     /**___Server___**/
     @Test
     public void getServer_casNull(){
-        Utilisateur_Server utilisateurServer= new Utilisateur_Server();
+        UtilisateurServer utilisateurServer= new UtilisateurServer();
         utilisateurServer.setServer(null);
         assertNull(utilisateurServer.getServer());
     }
 
     @Test
     public void getServer_casVide(){
-        Utilisateur_Server utilisateurServer= new Utilisateur_Server();
+        UtilisateurServer utilisateurServer= new UtilisateurServer();
         utilisateurServer.setServer(new Server());
         assertEquals(utilisateurServer.getServer(), new Server());
     }
@@ -70,7 +70,7 @@ public class TestUtilisateur_Server implements Serializable {
         Server server = new Server();
         server.setName("dd");
 
-        Utilisateur_Server utilisateurServer= new Utilisateur_Server();
+        UtilisateurServer utilisateurServer= new UtilisateurServer();
         utilisateurServer.setServer(server);
         assertEquals(utilisateurServer.getServer(), server);
     }

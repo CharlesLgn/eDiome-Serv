@@ -7,12 +7,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "utilisateur_serveur")
-public class Utilisateur_Server implements Serializable {
+public class UtilisateurServer implements Serializable {
     private int id;
     private Utilisateur user;
     private Server server;
 
-    public Utilisateur_Server() {
+    public UtilisateurServer() {
         this.id = -1;
     }
 

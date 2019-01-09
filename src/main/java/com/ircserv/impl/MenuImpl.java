@@ -4,10 +4,10 @@ import com.ircserv.contstante.Constante;
 import com.ircserv.inter.MenuInterface;
 import com.ircserv.manager.ServerManager;
 import com.ircserv.manager.UtilisateurManager;
-import com.ircserv.manager.Utilisateur_ServerManager;
+import com.ircserv.manager.UtilisateurServerManager;
 import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
-import com.ircserv.metier.Utilisateur_Server;
+import com.ircserv.metier.UtilisateurServer;
 import com.ircserv.utils.XMLDataFinder;
 
 import java.rmi.Naming;
@@ -79,7 +79,7 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     @Override
     public List<Server> findServerByUser(int userId) {
         try {
-            Utilisateur_ServerManager manager = new Utilisateur_ServerManager();
+            UtilisateurServerManager manager = new UtilisateurServerManager();
             UtilisateurManager uManager = new UtilisateurManager();
             manager.setup();
             uManager.setup();
@@ -116,9 +116,9 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
             ServerManager sm = new ServerManager();
             sm.setup();
 
-            Utilisateur_ServerManager usm = new Utilisateur_ServerManager();
+            UtilisateurServerManager usm = new UtilisateurServerManager();
             usm.setup();
-            Utilisateur_Server us = new Utilisateur_Server();
+            UtilisateurServer us = new UtilisateurServer();
             us.setUser(user);
             us.setServer(sm.readServer(1));
             usm.create(us);

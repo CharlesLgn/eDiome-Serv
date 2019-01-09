@@ -1,20 +1,23 @@
 package com.ircserv.manager;
 
+import com.ircserv.metier.Droit;
 import com.ircserv.metier.Server;
-import com.ircserv.metier.UtilisateurServer;
+import com.ircserv.metier.Utilisateur;
+import com.ircserv.metier.UtilisateurDroitServer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+public class utilisateurDroitServerManager {
 
-public class ServerManager {
     protected SessionFactory sessionFactory;
 
     public void setup() {
         // code to load Hibernate Session factory
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure() // configures settings from hibernate.cfg.xml
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure() // configures settings from hibernate.cfg.xml
                 .build();
         try {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
@@ -32,64 +35,55 @@ public class ServerManager {
         sessionFactory.close();
     }
 
-    public Server readServer(int id) {
-        // code to get a book
-        Session session = sessionFactory.openSession();
-
-        Server server = session.get(Server.class, id);
-
-        return server;
 
 
-    }
+
+    public void create(UtilisateurDroitServer uds) {
 
 
-    public Server create(Server server) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        int noServer = (int)session.save(server);
+
+        session.save(uds);
 
         session.getTransaction().commit();
         session.close();
-
-        UtilisateurServerManager usm = new UtilisateurServerManager();
-        UtilisateurServer utilisateur_server = new UtilisateurServer();
-        utilisateur_server.setServer(readServer(noServer));
-        utilisateur_server.setUser(server.getCreateur());
-
-        usm.setup();
-        usm.create(utilisateur_server);
-
-        return readServer(noServer);
     }
 
     protected void delete(int id) {
 
         // code to remove a book
-       Server server = new Server();
-        server.setId(id);
+        UtilisateurDroitServer uds = new UtilisateurDroitServer();
+        uds.setId(id);
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.delete(server);
+        session.delete(uds);
 
         session.getTransaction().commit();
         session.close();
     }
 
+
+
     public static void main(String[] args) {
+        UtilisateurManager um =  new UtilisateurManager();
         ServerManager sm = new ServerManager();
-        sm.setup();
-        Server server = new Server();
-        server.setName("Profs");
-        UtilisateurManager um = new UtilisateurManager();
-
+        DroitManager dm = new DroitManager();
+        utilisateurDroitServerManager udsm = new utilisateurDroitServerManager();
         um.setup();
+        sm.setup();
+        dm.setup();
+        Utilisateur user = um.readUser(14);
+        Server server = sm.readServer(1);
+        Droit droit = dm.readDroit(1);
+        UtilisateurDroitServer usd = new UtilisateurDroitServer();
+        usd.setUser(user);
+        usd.setServeur(server);
+        usd.setDroit(droit);
+        udsm.setup();
+        udsm.delete(1);
 
-        server.setCreateur(um.readUser(14));
-        sm.create(server);
     }
 
 }
-
-
