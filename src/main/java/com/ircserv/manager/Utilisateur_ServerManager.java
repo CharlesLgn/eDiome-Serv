@@ -59,24 +59,20 @@ public class Utilisateur_ServerManager {
 
     }
 
-    public static void main(String[] args) {
-        ServerManager sm = new ServerManager();
-        sm.setup();
-        Server server = sm.readServer(5);
-        UtilisateurManager um = new UtilisateurManager();
+    protected void delete(int idUs) {
 
-        um.setup();
-
-        Utilisateur user = um.readUser(14);
-        Utilisateur_ServerManager usm = new Utilisateur_ServerManager();
+        // code to remove a book
         Utilisateur_Server us = new Utilisateur_Server();
-        us.setServer(server);
-        us.setUser(user);
-        usm.setup();
-        usm.create(us);
-        sm.create(server);
+        us.setId(idUs);
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
 
+        session.delete(us);
 
+        session.getTransaction().commit();
+        session.close();
     }
+
+
 
 }

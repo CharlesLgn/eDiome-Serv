@@ -3,6 +3,7 @@ package com.ircserv.manager;
 import com.ircserv.metier.PieceJointe;
 import com.ircserv.metier.Server;
 import com.ircserv.metier.TypePieceJointe;
+import com.ircserv.metier.Utilisateur_Droit_Server;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -60,6 +61,19 @@ public class TypePieceJointeManager {
         session.close();
     }
 
+    protected void delete(int id) {
+
+        // code to remove a book
+        TypePieceJointe tpj = new TypePieceJointe();
+        tpj.setId(id);
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.delete(tpj);
+
+        session.getTransaction().commit();
+        session.close();
+    }
 
 
     public static void main(String[] args) {

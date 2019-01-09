@@ -1,6 +1,9 @@
 package com.ircserv.manager;
 
+import com.ircserv.metier.Droit;
+import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
+import com.ircserv.metier.Utilisateur_Droit_Server;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -85,37 +88,26 @@ public class UtilisateurManager {
 
     }
 
-    protected void update() {
-/**
- // code to modify a book
- Book book = new Book();
- book.setId(2);
- book.setTitre("Prise en main de eDiome");
- book.setAuteur("Charles Ligony");
- book.setPrix(19.99f);
+    protected void delete(int idUser) {
 
- Session session = sessionFactory.openSession();
- session.beginTransaction();
-
- session.update(book);
-
- session.getTransaction().commit();
- session.close();**/
-    }
-
-    protected void delete() {
-        /**
          // code to remove a book
-         Book book = new Book();
-         book.setId(2);
+         Utilisateur user = new Utilisateur();
+         user.setId(idUser);
 
          Session session = sessionFactory.openSession();
          session.beginTransaction();
 
-         session.delete(book);
+         session.delete(user);
 
          session.getTransaction().commit();
-         session.close();**/
+         session.close();
+    }
+
+    public static void main(String[] args) {
+        UtilisateurManager um =  new UtilisateurManager();
+        um.setup();
+        um.delete(22);
+
     }
 
 }

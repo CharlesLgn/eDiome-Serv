@@ -60,8 +60,8 @@ public class ServerManager {
 
         Utilisateur_ServerManager usm = new Utilisateur_ServerManager();
         Utilisateur_Server utilisateur_server = new Utilisateur_Server();
-        utilisateur_server.setCode_serveur(readServer(noServer));
-        utilisateur_server.setNo_utilisateur(server.getCreateur());
+        utilisateur_server.setServer(readServer(noServer));
+        utilisateur_server.setUser(server.getCreateur());
 
         usm.setup();
         usm.create(utilisateur_server);
@@ -69,6 +69,19 @@ public class ServerManager {
         return readServer(noServer);
     }
 
+    protected void delete(int id) {
+
+        // code to remove a book
+       Server server = new Server();
+        server.setId(id);
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.delete(server);
+
+        session.getTransaction().commit();
+        session.close();
+    }
 
     public static void main(String[] args) {
         ServerManager sm = new ServerManager();

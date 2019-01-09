@@ -56,6 +56,20 @@ public class PieceJointeManager {
         session.close();
     }
 
+    protected void delete(int id) {
+
+        // code to remove a book
+        PieceJointe pj = new PieceJointe();
+        pj.setId(id);
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.delete(pj);
+
+        session.getTransaction().commit();
+        session.close();
+    }
+
 
 
     public static void main(String[] args) {

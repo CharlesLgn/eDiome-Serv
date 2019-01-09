@@ -55,6 +55,20 @@ public class DroitManager {
         session.close();
     }
 
+
+    protected void delete(int id) {
+
+        // code to remove a book
+        Droit droit = new Droit();
+        droit.setId(id);
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.delete(droit);
+
+        session.getTransaction().commit();
+        session.close();
+    }
     public static void main(String[] args) {
        try{
            DroitManager dm = new DroitManager();

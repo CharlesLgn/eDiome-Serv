@@ -75,6 +75,20 @@ public class MessageManager {
         return new ArrayList<>(messages);
     }
 
+    protected void delete(int id) {
+
+        // code to remove a book
+        Message msg = new Message();
+        msg.setId(id);
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.delete(msg);
+
+        session.getTransaction().commit();
+        session.close();
+    }
+
     public static void main(String[] args) {
         MessageManager messageManager = new MessageManager();
         messageManager.setup();
