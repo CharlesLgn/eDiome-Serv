@@ -27,6 +27,7 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
 
     @Override
     public int createNewServer() {
+        System.err.println("preparation creation serv");
         return createNewServer(numServ++);
     }
 
@@ -49,18 +50,28 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
         }
     }
 
-    private int createNewServer(int numServ) {
+    public int createNewServer(int numServ) {
         try {
+            System.out.println("creation of the server "+numServ);
+            System.setProperty("java.rmi.server.hostname","home.rscharff.fr");
+            String ip = "localhost";
             int port = Constante.PORT;
             LocateRegistry.getRegistry(port);
+            LocateRegistry.getRegistry("home.rscharff.fr");
+            Naming.rebind("//" + ip + ":" + port + "/serv" + numServ, new ServerImpl(port, numServ));
 
-            Naming.rebind("//" + Constante.IP + ":" + port + "/serv" + numServ, new ServerImpl(port, numServ));
+            System.err.println("server "+numServ+" created !!");
             return numServ;
         } catch (Exception e) {
-            // TODO: handle exception
-            System.out.println("echec : " + e);
+            e.printStackTrace();
         }
         return -1;
+    }
+
+    public List<Server> getAllServ(){
+        ServerManager serverManager = new ServerManager();
+        serverManager.setup();
+        return serverManager.getAllServ();
     }
 
     @Override

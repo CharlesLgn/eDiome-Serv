@@ -1,9 +1,14 @@
 package com.ircserv.manager;
 
+import com.ircserv.metier.Message;
 import com.ircserv.metier.Server;
 import com.ircserv.metier.UtilisateurServer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ServerManager {
@@ -23,12 +28,8 @@ public class ServerManager {
     public Server readServer(int id) {
         // code to get a book
         Session session = sessionFactory.openSession();
-
         Server server = session.get(Server.class, id);
-
         return server;
-
-
     }
 
 
@@ -52,30 +53,26 @@ public class ServerManager {
     }
 
     protected void delete(int id) {
-
         // code to remove a book
        Server server = new Server();
         server.setId(id);
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         session.delete(server);
-
         session.getTransaction().commit();
         session.close();
+    }
+
+    public List<Server> getAllServ(){
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from Server as serv");
+        return query.list();
     }
 
     public static void main(String[] args) {
         ServerManager sm = new ServerManager();
         sm.setup();
-        Server server = new Server();
-        server.setName("Profs");
-        UtilisateurManager um = new UtilisateurManager();
-
-        um.setup();
-
-        server.setCreateur(um.readUser(14));
-        sm.create(server);
+        sm.delete(4);
     }
 
 }

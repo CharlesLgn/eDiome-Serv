@@ -16,22 +16,29 @@ import java.util.List;
 
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
-  private ArrayList<Message> message;
+  private List<Message> message;
   private int numServ;
 
   public ServerImpl(int port, int numServ) throws RemoteException {
     super(port);
-    message = new ArrayList<>();
     this.numServ = numServ;
+    this.message = getMessageFromBdd();
+  }
+
+  private List<Message> getMessageFromBdd(){
+    MessageManager mm = new MessageManager();
+    mm.setup();
+    Server serv = getServ();
+    return mm.getMessagesByServ(serv);
   }
 
   @Override
-  public ArrayList<Message> getMessages() {
+  public List<Message> getMessages() {
     return message;
   }
 
   @Override
-  public ArrayList<Message> getMessages(int nbLastMessage) {
+  public List<Message> getMessages(int nbLastMessage) {
     if (nbLastMessage > message.size()) {
       return message;
     } else {

@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Server Creation - rscharff" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="com.ircserv.testMenu" />
-    <module name="irc-serv" />
+    <module name="artifactid" />
     <option name="PROGRAM_PARAMETERS" value="home.rscharff.fr" />
     <method v="2">
       <option name="Make" enabled="true" />
