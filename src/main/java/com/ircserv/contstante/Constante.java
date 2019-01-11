@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Constante {
     //server
-    public static int PORT = 186;
+    public static int PORT = 8001;
     public static String IP;//"home.rscharff.fr";
 
     //Files Type

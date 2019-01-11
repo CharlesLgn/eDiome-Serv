@@ -48,7 +48,6 @@ public class UtilisateurServerManager {
     }
 
     protected void delete(int idUs) {
-
         // code to remove a book
         UtilisateurServer us = new UtilisateurServer();
         us.setId(idUs);
@@ -59,6 +58,16 @@ public class UtilisateurServerManager {
 
         session.getTransaction().commit();
         session.close();
+    }
+
+    protected void deleteAllByServ(Server server) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from UtilisateurServer as userServer where userServer.server = :server");
+        query.setParameter("server", server);
+        List<UtilisateurServer> utilisateurServers = query.list();
+        for (UtilisateurServer user : utilisateurServers){
+            delete(user.getId());
+        }
     }
 
 

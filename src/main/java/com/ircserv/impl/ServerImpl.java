@@ -118,7 +118,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
   public List<Utilisateur> getAllUserInServer() {
     UtilisateurManager utilisateurManager = new UtilisateurManager();
     utilisateurManager.setup();
-    return utilisateurManager.readAllUserNotInServer(getServ());
+    return utilisateurManager.readAllUserInServer(getServ());
   }
 
   @Override
