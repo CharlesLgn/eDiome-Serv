@@ -51,18 +51,17 @@ public class ServerManager {
         return readServer(noServer);
     }
 
-    protected void delete(int id) {
+    public void delete(int id) {
+       UtilisateurServerManager usm = new UtilisateurServerManager();
+       usm.setup();
 
-        // code to remove a book
-       Server server = new Server();
-        server.setId(id);
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        session.delete(server);
-
-        session.getTransaction().commit();
-        session.close();
+       Server server = readServer(id);
+       usm.deleteAllByServ(server);
+       Session session = sessionFactory.openSession();
+       session.beginTransaction();
+       session.delete(server);
+       session.getTransaction().commit();
+       session.close();
     }
 
     public static void main(String[] args) {

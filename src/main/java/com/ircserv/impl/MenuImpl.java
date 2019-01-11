@@ -69,10 +69,13 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
             int port = Constante.PORT;
             LocateRegistry.getRegistry(port);
 
+            ServerManager sm = new ServerManager();
+            sm.setup();
+            sm.delete(nbServ);
             Naming.unbind("//" + Constante.IP + ":" + port + "/serv" + nbServ);
+
         } catch (Exception e) {
-            // TODO: handle exception
-            System.out.println("echec : " + e);
+            e.printStackTrace();
         }
     }
 

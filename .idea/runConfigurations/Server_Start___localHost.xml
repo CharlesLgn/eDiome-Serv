@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Server Start - localHost" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="com.ircserv.Server" />
-    <module name="irc-serv" />
+    <module name="IRCServ" />
     <option name="PROGRAM_PARAMETERS" value="localhost" />
     <method v="2">
       <option name="Make" enabled="true" />
