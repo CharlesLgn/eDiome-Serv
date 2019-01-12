@@ -16,6 +16,11 @@ public class UtilisateurServer implements Serializable {
         this.id = -1;
     }
 
+    public UtilisateurServer(Utilisateur user, Server server) {
+        this.user = user;
+        this.server = server;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

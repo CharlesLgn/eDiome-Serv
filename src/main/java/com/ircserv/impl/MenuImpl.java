@@ -18,60 +18,35 @@ import java.util.List;
 
 public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
 
-    private int numServ;
-
     public MenuImpl(int port) throws RemoteException {
         super(port);
-        this.numServ = 0;
-    }
-
-    @Override
-    public int createNewServer() {
-        System.err.println("preparation creation serv");
-        return createNewServer(numServ++);
     }
 
     @Override
     public Server createNewServer(String name, int userId) {
         try {
+            //find creator
             UtilisateurManager um = new UtilisateurManager();
-            ServerManager sm = new ServerManager();
             um.setup();
-            sm.setup();
+            Utilisateur user = um.read(userId);
 
-            Utilisateur user = um.readUser(userId);
             Server serv = new Server(name, user);
+            //create serv
+            ServerManager sm = new ServerManager();
+            sm.setup();
             Server noServ = sm.create(serv);
+
+            //create access to serv
+            UtilisateurServerManager usm = new UtilisateurServerManager();
+            usm.setup();
+            UtilisateurServer utilisateurServer = new UtilisateurServer(user, noServ);
+            usm.create(utilisateurServer);
             createNewServer(noServ.getId());
             return noServ;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public int createNewServer(int numServ) {
-        try {
-            System.out.println("creation of the server "+numServ);
-            System.setProperty("java.rmi.server.hostname","home.rscharff.fr");
-            String ip = "localhost";
-            int port = Constante.PORT;
-            LocateRegistry.getRegistry(port);
-            LocateRegistry.getRegistry("home.rscharff.fr");
-            Naming.rebind("//" + ip + ":" + port + "/serv" + numServ, new ServerImpl(port, numServ));
-
-            System.err.println("server "+numServ+" created !!");
-            return numServ;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
-    public List<Server> getAllServ(){
-        ServerManager serverManager = new ServerManager();
-        serverManager.setup();
-        return serverManager.getAllServ();
     }
 
     @Override
@@ -79,12 +54,10 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
         try {
             int port = Constante.PORT;
             LocateRegistry.getRegistry(port);
-
             ServerManager sm = new ServerManager();
             sm.setup();
             sm.delete(nbServ);
             Naming.unbind("//" + Constante.IP + ":" + port + "/serv" + nbServ);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,19 +65,13 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
 
     @Override
     public List<Server> findServerByUser(int userId) {
-        try {
-            UtilisateurServerManager manager = new UtilisateurServerManager();
-            UtilisateurManager uManager = new UtilisateurManager();
-            manager.setup();
-            uManager.setup();
+        UtilisateurManager uManager = new UtilisateurManager();
+        uManager.setup();
+        Utilisateur user = uManager.read(userId);
 
-            Utilisateur user = uManager.readUser(userId);
-
-            return manager.getServerByUser(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return XMLDataFinder.getServByUser(userId);
-        }
+        UtilisateurServerManager manager = new UtilisateurServerManager();
+        manager.setup();
+        return manager.getServerByUser(user);
     }
 
     @Override
@@ -117,30 +84,64 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     @Override
     public String getUserName(int id) {
         UtilisateurManager manager = new UtilisateurManager();
-        return manager.read(id);
+        manager.setup();
+        return manager.read(id).getIdentifiant();
 
     }
 
     @Override
     public int createUser(Utilisateur user) {
         try {
+            //create user
             UtilisateurManager manager = new UtilisateurManager();
             manager.setup();
             manager.create(user);
+            //get the general server
             ServerManager sm = new ServerManager();
             sm.setup();
-
+            Server server = sm.read(1);
+            //link the user to the general user
             UtilisateurServerManager usm = new UtilisateurServerManager();
             usm.setup();
-            UtilisateurServer us = new UtilisateurServer();
-            us.setUser(user);
-            us.setServer(sm.readServer(1));
-            usm.create(us);
+            UtilisateurServer utilisateurServer = new UtilisateurServer();
+            utilisateurServer.setUser(user);
+            utilisateurServer.setServer(server);
+            usm.create(utilisateurServer);
 
             return user.getId();
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    /**
+     * @param numServ the id of the server
+     * @return the id of the server if the server is up, else -1
+     */
+    public int createNewServer(int numServ) {
+        try {
+            System.out.println("creation of the server " + numServ);
+            System.setProperty("java.rmi.server.hostname", "home.rscharff.fr");
+            String ip = "localhost";
+            int port = Constante.PORT;
+            LocateRegistry.getRegistry(port);
+            Naming.rebind("//" + ip + ":" + port + "/serv" + numServ, new ServerImpl(port, numServ));
+
+            System.err.println("server " + numServ + " created !!");
+            return numServ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * @return the list of all server (id, name, creator)
+     */
+    public List<Server> getAllServ() {
+        ServerManager serverManager = new ServerManager();
+        serverManager.setup();
+        return serverManager.getAllServ();
     }
 }

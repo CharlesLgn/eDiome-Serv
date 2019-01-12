@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface MenuInterface extends Remote {
-    int createNewServer() throws RemoteException;
     Server createNewServer(String name, int userId) throws RemoteException;
     void deleteServer(int nbServ) throws RemoteException;
     List<Server> findServerByUser(int userId) throws RemoteException;

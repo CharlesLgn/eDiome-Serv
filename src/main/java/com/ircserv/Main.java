@@ -25,7 +25,6 @@ public class Main {
             for (Server server : servers){
                 new Thread(new ServCraft(server, obj)).start();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -13,42 +13,10 @@ import java.sql.Date;
 import java.util.List;
 
 
-public class UtilisateurManager {
-    protected SessionFactory sessionFactory;
+public class UtilisateurManager extends HibernateFactory<Utilisateur> {
 
-    public void setup() {
-        // code to load Hibernate Session factory
-        HibernateUtils hibernateUtils = new HibernateUtils();
-        sessionFactory = hibernateUtils.setup(sessionFactory);
-    }
-
-    protected void exit() {
-        // code to close Hibernate Session factory
-        sessionFactory.close();
-    }
-
-    public int create(Utilisateur user) {
-        // code to save a book
-        user.setRegistrationDate(new Date(System.currentTimeMillis()));
-
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        int res = (int)session.save(user);
-        session.getTransaction().commit();
-        session.close();
-        return res;
-    }
-
-    public String read(int id) {
-        // code to get a book
-        Session session = sessionFactory.openSession();
-        Utilisateur user = session.get(Utilisateur.class, id);
-        return user.getIdentifiant();
-    }
-
-    public Utilisateur readUser(int id) {
-        Session session = sessionFactory.openSession();
-        return session.get(Utilisateur.class, id);
+    public UtilisateurManager(){
+        super(Utilisateur.class);
     }
 
     public int connexionCHeck(String pseudo, String mdp) {
@@ -93,25 +61,6 @@ public class UtilisateurManager {
         List users = query.list();
         return users;
     }
-
-
-    protected void delete(int idUser) {
-         // code to remove a book
-         Utilisateur user = new Utilisateur();
-         user.setId(idUser);
-         Session session = sessionFactory.openSession();
-         session.beginTransaction();
-         session.delete(user);
-         session.getTransaction().commit();
-         session.close();
-    }
-
-    public static void main(String[] args) {
-        UtilisateurManager um =  new UtilisateurManager();
-        um.setup();
-        um.delete(22);
-    }
-
 }
 
 

@@ -10,29 +10,10 @@ import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtilisateurServerManager {
-    protected SessionFactory sessionFactory;
+public class UtilisateurServerManager extends HibernateFactory<UtilisateurServer>{
 
-    public void setup() {
-        // code to load Hibernate Session factory
-        HibernateUtils hibernateUtils = new HibernateUtils();
-        sessionFactory = hibernateUtils.setup(sessionFactory);
-    }
-
-    protected void exit() {
-        // code to close Hibernate Session factory
-        sessionFactory.close();
-    }
-
-
-    public void create(UtilisateurServer userver) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        session.save(userver);
-
-        session.getTransaction().commit();
-        session.close();
+    public UtilisateurServerManager(){
+        super(UtilisateurServer.class);
     }
 
     public List<Server> getServerByUser(Utilisateur user) {
@@ -45,19 +26,6 @@ public class UtilisateurServerManager {
 
     public void getUserByServer(Server server) {
 
-    }
-
-    protected void delete(int idUs) {
-        // code to remove a book
-        UtilisateurServer us = new UtilisateurServer();
-        us.setId(idUs);
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        session.delete(us);
-
-        session.getTransaction().commit();
-        session.close();
     }
 
     protected void deleteAllByServ(Server server) {
