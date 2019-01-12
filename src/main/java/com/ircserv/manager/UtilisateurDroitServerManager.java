@@ -20,16 +20,9 @@ public class UtilisateurDroitServerManager extends HibernateFactory<UtilisateurD
 
 
     public Droit getDroit(Server server, Utilisateur utilisateur){
-        List<UtilisateurDroitServer> userServer = get(server,utilisateur);
-        for (int i = 0; i < userServer.size(); i++) {
             try {
-                UtilisateurDroitServer user = userServer.get(i);
-                return user.getDroit();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return new Droit();
+                return get(server,utilisateur).get(0).getDroit();
+            } catch (Exception e) { return new Droit(); }
     }
 
     public UtilisateurDroitServer read(Server server, Utilisateur utilisateur){

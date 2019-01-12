@@ -17,13 +17,12 @@ import java.util.List;
 /**
  * implementation of the server in RMI
  *
+ * @author Charles Ligony
+ * @author Cyril   Challouatte
+ * @author Loic    Noel
+ * @author Lucas   Cuoco
  * @see com.ircserv.inter.ServerInterface
- *
- * @author  Charles Ligony
- * @author  Cyril   Challouatte
- * @author  Loic    Noel
- * @author  Lucas   Cuoco
- * @since   eDiome 1.0.0
+ * @since eDiome 1.0.0
  */
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
@@ -64,10 +63,11 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
         }
     }
 
-     /**
+    /**
      * add the message to the message list (bdd + serverList)
-     * @param userId the id of the user
-     * @param message the content of the message
+     *
+     * @param userId      the id of the user
+     * @param message     the content of the message
      * @param pieceJointe the file send if there is one
      */
     private void send(int userId, String message, PieceJointe pieceJointe) {
@@ -81,12 +81,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
         MessageManager messageManager = new MessageManager();
         messageManager.setup();
         //using a patern Builder
-        Message message1 = new Message.MessageBuilder()
-                .setContenu(message)
-                .setDate(Timestamp.from(Instant.now()))
-                .setUser(user)
-                .addServ(server)
-                .addPieceJointe(pieceJointe).build();
+        Message message1 = new Message.MessageBuilder().setContenu(message).setDate(Timestamp.from(Instant.now())).setUser(user).addServ(server).addPieceJointe(pieceJointe).build();
         this.message.add(message1);
         messageManager.create(message1);
     }
@@ -168,22 +163,32 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
             DroitManager droitManager = new DroitManager();
             droitManager.setup();
 
-            this.setDroit(utilisateur, droitManager.read(3));
+            UtilisateurDroitServerManager udsm = new UtilisateurDroitServerManager();
+            udsm.setup();
+            UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
+            utilisateurDroitServer.setUser(utilisateur);
+            utilisateurDroitServer.setServeur(server);
+            utilisateurDroitServer.setDroit(droitManager.read(3));
+            udsm.create(utilisateurDroitServer);
         } else {
             usm.delete(utilisateurServer.getId());
         }
     }
 
     @Override
-    public Droit getDroit(Utilisateur utilisateur) {
+    public Droit getDroit(int utilisateur) {
+        UtilisateurManager utilisateurManager = new UtilisateurManager();
+        utilisateurManager.setup();
+
+        Utilisateur user = utilisateurManager.read(utilisateur);
         Server server = getServ();
         UtilisateurServer utilisateurServer = new UtilisateurServer();
         utilisateurServer.setServer(server);
-        utilisateurServer.setUser(utilisateur);
+        utilisateurServer.setUser(user);
 
         UtilisateurDroitServerManager udsm = new UtilisateurDroitServerManager();
         udsm.setup();
-        return udsm.getDroit(server, utilisateur);
+        return udsm.getDroit(server, user);
     }
 
     @Override

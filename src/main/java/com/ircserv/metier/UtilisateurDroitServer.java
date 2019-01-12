@@ -28,7 +28,7 @@ public class UtilisateurDroitServer implements Serializable {
         this.id = id;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_droit")
     public Droit getDroit() {
         return droit;
@@ -39,7 +39,7 @@ public class UtilisateurDroitServer implements Serializable {
         this.droit = droit;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "no_utilisateur")
     public Utilisateur getUser() {
         return user;
@@ -49,7 +49,7 @@ public class UtilisateurDroitServer implements Serializable {
         this.user = user;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "code_serveur")
     public Server getServeur() {
         return serveur;

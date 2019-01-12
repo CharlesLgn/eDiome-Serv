@@ -6,7 +6,7 @@ import java.util.List;
 public class Constante {
     //server
     public static int PORT = 186;
-    public static String IP;//"home.rscharff.fr";
+    public static String IP;
 
     //Files Type
     public static List<String> AUDIO =   Arrays.asList("wav", "mp3", "m4a", "m3u8", "aif", "aiff");

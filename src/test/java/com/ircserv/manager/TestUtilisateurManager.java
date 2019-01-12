@@ -25,9 +25,7 @@ public class TestUtilisateurManager {
         utilisateur.setMailPro("");
         utilisateur.setPassword("test");
         utilisateur.setTelephonePro("");
-        id = utilisateurManager.create(utilisateur);
-
-        Utilisateur userTest = utilisateurManager.readUser(id);
+        Utilisateur userTest = utilisateurManager.create(utilisateur);
 
         assertEquals(userTest.getPrenom(), utilisateur.getPrenom());
         assertEquals(userTest.getNom(), utilisateur.getNom());
@@ -47,7 +45,7 @@ public class TestUtilisateurManager {
         utilisateur.setPassword("test");
         utilisateur.setTelephonePro("");
 
-        Utilisateur userTest = utilisateurManager.readUser(id);
+        Utilisateur userTest = utilisateurManager.read(id);
 
         assertEquals(userTest.getPrenom(), utilisateur.getPrenom());
         assertEquals(userTest.getNom(), utilisateur.getNom());

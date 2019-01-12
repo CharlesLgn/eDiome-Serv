@@ -18,7 +18,7 @@ public class MessageManager extends HibernateFactory<Message>{
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("from Message as message where message.server = :server");
         query.setParameter("server", server);
-        List<Message> messages = query.list();
+        List messages = query.list();
         return new ArrayList<>(messages);
     }
 

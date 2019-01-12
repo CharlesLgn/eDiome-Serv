@@ -2,12 +2,8 @@ package com.ircserv.impl;
 
 import com.ircserv.contstante.Constante;
 import com.ircserv.inter.MenuInterface;
-import com.ircserv.manager.ServerManager;
-import com.ircserv.manager.UtilisateurManager;
-import com.ircserv.manager.UtilisateurServerManager;
-import com.ircserv.metier.Server;
-import com.ircserv.metier.Utilisateur;
-import com.ircserv.metier.UtilisateurServer;
+import com.ircserv.manager.*;
+import com.ircserv.metier.*;
 import com.ircserv.utils.XMLDataFinder;
 
 import java.rmi.Naming;
@@ -29,18 +25,29 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
             UtilisateurManager um = new UtilisateurManager();
             um.setup();
             Utilisateur user = um.read(userId);
-
             Server serv = new Server(name, user);
             //create serv
             ServerManager sm = new ServerManager();
             sm.setup();
             Server noServ = sm.create(serv);
-
             //create access to serv
             UtilisateurServerManager usm = new UtilisateurServerManager();
             usm.setup();
             UtilisateurServer utilisateurServer = new UtilisateurServer(user, noServ);
             usm.create(utilisateurServer);
+            //set as admin
+            DroitManager dm = new DroitManager();
+            dm.setup();
+            Droit droit = dm.read(0); //Admin
+            //create right
+            UtilisateurDroitServerManager udsm = new UtilisateurDroitServerManager();
+            udsm.setup();
+            UtilisateurDroitServer usertDroitServer = new UtilisateurDroitServer();
+            usertDroitServer.setDroit(droit);
+            usertDroitServer.setServeur(serv);
+            usertDroitServer.setUser(user);
+            udsm.create(usertDroitServer);
+            //creat the real server
             createNewServer(noServ.getId());
             return noServ;
         } catch (Exception e) {
@@ -115,6 +122,13 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
         }
     }
 
+    @Override
+    public List<Droit> getDroit() {
+        DroitManager droitManager = new DroitManager();
+        droitManager.setup();
+        return droitManager.getall();
+    }
+
     /**
      * @param numServ the id of the server
      * @return the id of the server if the server is up, else -1
@@ -122,7 +136,8 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     public int createNewServer(int numServ) {
         try {
             System.out.println("creation of the server " + numServ);
-            System.setProperty("java.rmi.server.hostname", "home.rscharff.fr");
+            System.setProperty("java.rmi.server.hostname", "localhost");
+            //System.setProperty("java.rmi.server.hostname", "home.rscharff.fr");
             String ip = "localhost";
             int port = Constante.PORT;
             LocateRegistry.getRegistry(port);

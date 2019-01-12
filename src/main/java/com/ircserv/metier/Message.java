@@ -43,7 +43,7 @@ public class Message implements Serializable {
     }
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "no_utilisateur")
     public Utilisateur getUser() {
         return user;
@@ -53,7 +53,7 @@ public class Message implements Serializable {
         this.user = user;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "code_serveur")
     public Server getServer() {
         return server;
@@ -79,7 +79,7 @@ public class Message implements Serializable {
         return contenu;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pj")
     public PieceJointe getPieceJointe() {
         return pieceJointe;

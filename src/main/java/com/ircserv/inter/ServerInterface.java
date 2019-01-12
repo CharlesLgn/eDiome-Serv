@@ -61,7 +61,7 @@ public interface ServerInterface extends Remote{
      * @param utilisateur the user on the server
      * @return right value assign to a user on a server
      */
-    Droit getDroit(Utilisateur utilisateur) throws RemoteException;
+    Droit getDroit(int utilisateur) throws RemoteException;
 
     /**
      * change right value assign to a user on a server

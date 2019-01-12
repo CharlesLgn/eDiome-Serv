@@ -56,7 +56,9 @@ public abstract class HibernateFactory<T> {
 
     public void update(T t) {
         Session session = sessionFactory.openSession();
+        session.beginTransaction();
         session.update(t);
+        session.getTransaction().commit();
         session.close();
     }
 

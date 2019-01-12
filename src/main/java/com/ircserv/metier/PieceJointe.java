@@ -44,7 +44,7 @@ public class PieceJointe implements Serializable {
         this.chemin = chemin;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_type_pj")
     public TypePieceJointe getTypePieceJointe() {
         return typePieceJointe;

@@ -58,4 +58,9 @@ public class Droit implements Serializable {
     public int hashCode() {
         return Objects.hash(id, libelle, description);
     }
+
+    @Override
+    public String toString() {
+        return libelle;
+    }
 }

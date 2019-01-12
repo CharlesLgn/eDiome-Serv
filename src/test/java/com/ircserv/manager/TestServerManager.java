@@ -29,8 +29,8 @@ public class TestServerManager {
         utilisateur.setMailPro("");
         utilisateur.setPassword("test");
         utilisateur.setTelephonePro("");
-        id = utilisateurManager.create(utilisateur);
-        utilisateur = utilisateurManager.readUser(id);
+
+        utilisateur = utilisateurManager.create(utilisateur);
         server = new Server("test", utilisateur);
         Server serverTest = serverManager.create(server);
 
