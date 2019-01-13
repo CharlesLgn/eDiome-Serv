@@ -15,7 +15,7 @@ public class TypePieceJointeManager extends HibernateFactory<TypePieceJointe>{
 
     public TypePieceJointe getPJbyExtension(String extention) {
         // code to get a book
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Query query = session.createQuery("from TypePieceJointe as TypePieceJointe where TypePieceJointe.extension = :ext");
         query.setParameter("ext", extention);
         List<TypePieceJointe> pj = query.list();

@@ -15,13 +15,11 @@ public class TestServerManager {
     @Before
     public void initData(){
         serverManager = new ServerManager();
-        serverManager.setup();
     }
 
     @Test
     public void TestCreate(){
         UtilisateurManager utilisateurManager = new UtilisateurManager();
-        utilisateurManager.setup();
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNom("test");
         utilisateur.setPrenom("test");

@@ -20,7 +20,7 @@ public class UtilisateurManager extends HibernateFactory<Utilisateur> {
     }
 
     public int connexionCHeck(String pseudo, String mdp) {
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Query query = session.createQuery("select user from Utilisateur as user where identifiant = :pseudo and password = :mdp");
         query.setParameter("pseudo", pseudo);
         query.setParameter("mdp", mdp);
@@ -38,7 +38,7 @@ public class UtilisateurManager extends HibernateFactory<Utilisateur> {
     }
 
     public List<Utilisateur> readAllUser() {
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Query query = session.createQuery("select user from Utilisateur as user");
         List users = query.list();
         return users;
@@ -55,7 +55,7 @@ public class UtilisateurManager extends HibernateFactory<Utilisateur> {
     }
 
     private List<Utilisateur> readSpecificUser(Server server, String request){
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Query query = session.createQuery(request);
         query.setParameter("serv", server);
         List users = query.list();

@@ -12,7 +12,7 @@ public class DroitManager extends HibernateFactory<Droit> {
     }
 
     public List<Droit> getall() {
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Query query = session.createQuery("from Droit as droit");
         return query.list();
     }

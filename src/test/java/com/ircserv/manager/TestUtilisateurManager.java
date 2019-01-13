@@ -11,13 +11,12 @@ public class TestUtilisateurManager {
     private int id;
 
     @Before
-    public void initData(){
+    public void initData() {
         utilisateurManager = new UtilisateurManager();
-       utilisateurManager.setup();
     }
 
     @Test
-    public void TestCreate(){
+    public void TestCreate() {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNom("test");
         utilisateur.setPrenom("test");
@@ -36,7 +35,7 @@ public class TestUtilisateurManager {
     }
 
     @Test
-    public void testSelect(){
+    public void testSelect() {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNom("test");
         utilisateur.setPrenom("test");
@@ -56,5 +55,6 @@ public class TestUtilisateurManager {
     }
 
     @Test
-    public void testDelete(){}
+    public void testDelete() {
+    }
 }

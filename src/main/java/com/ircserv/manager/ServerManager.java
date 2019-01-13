@@ -14,7 +14,7 @@ public class ServerManager extends HibernateFactory<Server>{
     }
 
     public List<Server> getAllServ(){
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Query query = session.createQuery("from Server as serv");
         return query.list();
     }

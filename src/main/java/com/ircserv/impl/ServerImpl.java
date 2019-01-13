@@ -40,7 +40,6 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
      */
     private List<Message> getMessageFromBdd() {
         MessageManager mm = new MessageManager();
-        mm.setup();
         Server serv = getServ();
         return mm.getMessagesByServ(serv);
     }
@@ -75,11 +74,9 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
         Server server = getServ();
         //get the user
         UtilisateurManager um = new UtilisateurManager();
-        um.setup();
         Utilisateur user = um.read(userId);
         //create the message
         MessageManager messageManager = new MessageManager();
-        messageManager.setup();
         //using a patern Builder
         Message message1 = new Message.MessageBuilder().setContenu(message).setDate(Timestamp.from(Instant.now())).setUser(user).addServ(server).addPieceJointe(pieceJointe).build();
         this.message.add(message1);
@@ -103,7 +100,6 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
             String extension = filename.replaceAll(".*[.]", "");
 
             TypePieceJointeManager tpjm = new TypePieceJointeManager();
-            tpjm.setup();
             TypePieceJointe tpj = tpjm.getPJbyExtension(extension);
             if (tpj.getLibelle() == null) {
                 tpj.setExtension(extension);
@@ -114,7 +110,6 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
             System.out.println(tpj.getLibelle());
             PieceJointeManager pjm = new PieceJointeManager();
-            pjm.setup();
 
             PieceJointe pj = new PieceJointe(path, tpj);
             pjm.create(pj);
@@ -128,14 +123,12 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     @Override
     public List<Utilisateur> getAllUserNotInServer() {
         UtilisateurManager utilisateurManager = new UtilisateurManager();
-        utilisateurManager.setup();
         return utilisateurManager.readAllUserNotInServer(getServ());
     }
 
     @Override
     public List<Utilisateur> getAllUserInServer() {
         UtilisateurManager utilisateurManager = new UtilisateurManager();
-        utilisateurManager.setup();
         return utilisateurManager.readAllUserInServer(getServ());
     }
 
@@ -156,29 +149,26 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
         utilisateurServer.setUser(utilisateur);
 
         UtilisateurServerManager usm = new UtilisateurServerManager();
-        usm.setup();
         if (create) {
             usm.create(utilisateurServer);
 
             DroitManager droitManager = new DroitManager();
-            droitManager.setup();
 
             UtilisateurDroitServerManager udsm = new UtilisateurDroitServerManager();
-            udsm.setup();
             UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
             utilisateurDroitServer.setUser(utilisateur);
             utilisateurDroitServer.setServeur(server);
             utilisateurDroitServer.setDroit(droitManager.read(3));
             udsm.create(utilisateurDroitServer);
         } else {
-            usm.delete(utilisateurServer.getId());
+            utilisateurServer = usm.read(server, utilisateur);
+            usm.delete(utilisateurServer);
         }
     }
 
     @Override
     public Droit getDroit(int utilisateur) {
         UtilisateurManager utilisateurManager = new UtilisateurManager();
-        utilisateurManager.setup();
 
         Utilisateur user = utilisateurManager.read(utilisateur);
         Server server = getServ();
@@ -187,14 +177,12 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
         utilisateurServer.setUser(user);
 
         UtilisateurDroitServerManager udsm = new UtilisateurDroitServerManager();
-        udsm.setup();
         return udsm.getDroit(server, user);
     }
 
     @Override
     public void setDroit(Utilisateur utilisateur, Droit droit) {
         UtilisateurDroitServerManager utilisateurDroitServerManager = new UtilisateurDroitServerManager();
-        utilisateurDroitServerManager.setup();
         UtilisateurDroitServer uds = utilisateurDroitServerManager.read(getServ(), utilisateur);
         uds.setDroit(droit);
         utilisateurDroitServerManager.update(uds);
@@ -203,14 +191,12 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     @Override
     public List<UtilisateurDroitServer> getAllDroit() {
         UtilisateurDroitServerManager udsm = new UtilisateurDroitServerManager();
-        udsm.setup();
         return udsm.getDroit(getServ());
     }
 
 
     private Server getServ() {
         ServerManager serverManager = new ServerManager();
-        serverManager.setup();
         return serverManager.read(numServ);
     }
 }

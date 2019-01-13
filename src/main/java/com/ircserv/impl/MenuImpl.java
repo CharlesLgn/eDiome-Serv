@@ -23,25 +23,20 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
         try {
             //find creator
             UtilisateurManager um = new UtilisateurManager();
-            um.setup();
             Utilisateur user = um.read(userId);
             Server serv = new Server(name, user);
             //create serv
             ServerManager sm = new ServerManager();
-            sm.setup();
             Server noServ = sm.create(serv);
             //create access to serv
             UtilisateurServerManager usm = new UtilisateurServerManager();
-            usm.setup();
             UtilisateurServer utilisateurServer = new UtilisateurServer(user, noServ);
             usm.create(utilisateurServer);
             //set as admin
             DroitManager dm = new DroitManager();
-            dm.setup();
             Droit droit = dm.read(0); //Admin
             //create right
             UtilisateurDroitServerManager udsm = new UtilisateurDroitServerManager();
-            udsm.setup();
             UtilisateurDroitServer usertDroitServer = new UtilisateurDroitServer();
             usertDroitServer.setDroit(droit);
             usertDroitServer.setServeur(serv);
@@ -59,11 +54,12 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     @Override
     public void deleteServer(int nbServ) {
         try {
+            ServerManager sm = new ServerManager();
+            Server server = sm.read(nbServ);
+            sm.delete(server);
+
             int port = Constante.PORT;
             LocateRegistry.getRegistry(port);
-            ServerManager sm = new ServerManager();
-            sm.setup();
-            sm.delete(nbServ);
             Naming.unbind("//" + Constante.IP + ":" + port + "/serv" + nbServ);
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,27 +69,22 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     @Override
     public List<Server> findServerByUser(int userId) {
         UtilisateurManager uManager = new UtilisateurManager();
-        uManager.setup();
         Utilisateur user = uManager.read(userId);
 
         UtilisateurServerManager manager = new UtilisateurServerManager();
-        manager.setup();
         return manager.getServerByUser(user);
     }
 
     @Override
     public int connect(String user, String psw) {
         UtilisateurManager manager = new UtilisateurManager();
-        manager.setup();
         return manager.connexionCHeck(user, psw);
     }
 
     @Override
-    public String getUserName(int id) {
+    public Utilisateur getUser(int id) {
         UtilisateurManager manager = new UtilisateurManager();
-        manager.setup();
-        return manager.read(id).getIdentifiant();
-
+        return manager.read(id);
     }
 
     @Override
@@ -101,19 +92,24 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
         try {
             //create user
             UtilisateurManager manager = new UtilisateurManager();
-            manager.setup();
             manager.create(user);
             //get the general server
             ServerManager sm = new ServerManager();
-            sm.setup();
             Server server = sm.read(1);
             //link the user to the general user
             UtilisateurServerManager usm = new UtilisateurServerManager();
-            usm.setup();
             UtilisateurServer utilisateurServer = new UtilisateurServer();
             utilisateurServer.setUser(user);
             utilisateurServer.setServer(server);
             usm.create(utilisateurServer);
+
+            UtilisateurDroitServer utilisateurDroitServer = new UtilisateurDroitServer();
+            UtilisateurDroitServerManager udsm = new UtilisateurDroitServerManager();
+            DroitManager droitManager = new DroitManager();
+            utilisateurDroitServer.setDroit(droitManager.read(4));
+            utilisateurDroitServer.setServeur(server);
+            utilisateurDroitServer.setUser(user);
+            udsm.create(utilisateurDroitServer);
 
             return user.getId();
         } catch (Exception e) {
@@ -125,7 +121,6 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
     @Override
     public List<Droit> getDroit() {
         DroitManager droitManager = new DroitManager();
-        droitManager.setup();
         return droitManager.getall();
     }
 
@@ -156,7 +151,6 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
      */
     public List<Server> getAllServ() {
         ServerManager serverManager = new ServerManager();
-        serverManager.setup();
         return serverManager.getAllServ();
     }
 }

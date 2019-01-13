@@ -17,7 +17,7 @@ public class UtilisateurServerManager extends HibernateFactory<UtilisateurServer
     }
 
     public List<Server> getServerByUser(Utilisateur user) {
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Query query = session.createQuery("SELECT userServer.server from UtilisateurServer as userServer where userServer.user = :user");
         query.setParameter("user", user);
         List<Server> servers = query.list();
@@ -29,15 +29,26 @@ public class UtilisateurServerManager extends HibernateFactory<UtilisateurServer
     }
 
     protected void deleteAllByServ(Server server) {
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Query query = session.createQuery("from UtilisateurServer as userServer where userServer.server = :server");
         query.setParameter("server", server);
         List<UtilisateurServer> utilisateurServers = query.list();
         for (UtilisateurServer user : utilisateurServers){
-            delete(user.getId());
+            delete(user);
         }
     }
 
 
-
+    public UtilisateurServer read(Server server, Utilisateur utilisateur) {
+        Session session = getSession();
+        Query query = session.createQuery("from UtilisateurServer as userServer where userServer.server = :server and userServer.user = :user");
+        query.setParameter("server", server);
+        query.setParameter("user", utilisateur);
+        List<UtilisateurServer> utilisateurServers = query.list();
+        try {
+            return utilisateurServers.get(0);
+        } catch (Exception e){
+            return new UtilisateurServer();
+        }
+    }
 }

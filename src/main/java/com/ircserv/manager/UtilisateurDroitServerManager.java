@@ -39,7 +39,7 @@ public class UtilisateurDroitServerManager extends HibernateFactory<UtilisateurD
     }
 
     public List<UtilisateurDroitServer> getDroit(Server server){
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Query query = session.createQuery("SELECT userServDroit from UtilisateurDroitServer as userServDroit where userServDroit.serveur = :serv");
         query.setParameter("serv", server);
         List<UtilisateurDroitServer> userServer = query.list();
@@ -48,7 +48,7 @@ public class UtilisateurDroitServerManager extends HibernateFactory<UtilisateurD
 
 
     private List<UtilisateurDroitServer> get(Server server, Utilisateur utilisateur){
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Query query = session.createQuery("from UtilisateurDroitServer as userServDroit where userServDroit.user = :user and userServDroit.serveur = :serv");
         query.setParameter("user", utilisateur);
         query.setParameter("serv", server);
