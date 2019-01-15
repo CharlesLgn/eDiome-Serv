@@ -92,7 +92,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     public void uploadFile(int userId, byte[] data, String filename) {
         try {
             filename = filename.replaceAll(" ", "_");
-            File file = new File("../data/server" + numServ + "/" + filename);
+            File file = new File("../../data/server" + numServ + "/" + filename);
             System.out.println(file.getAbsolutePath().replace(" ", "?"));
             FileUtils.writeByteArrayToFile(file, data);
             String path = file.getPath();
