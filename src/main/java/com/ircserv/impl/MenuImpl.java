@@ -92,7 +92,7 @@ public class MenuImpl extends UnicastRemoteObject implements MenuInterface {
         try {
             //create user
             UtilisateurManager manager = new UtilisateurManager();
-            manager.create(user);
+            user = manager.create(user);
             //get the general server
             ServerManager sm = new ServerManager();
             Server server = sm.read(1);
