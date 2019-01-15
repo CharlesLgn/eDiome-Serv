@@ -3,6 +3,7 @@ package com.ircserv.manager;
 import com.ircserv.metier.Server;
 import com.ircserv.metier.Utilisateur;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -18,6 +19,7 @@ public class TestServerManager {
     }
 
     @Test
+    @Ignore
     public void TestCreate(){
         UtilisateurManager utilisateurManager = new UtilisateurManager();
         Utilisateur utilisateur = new Utilisateur();
@@ -37,6 +39,7 @@ public class TestServerManager {
     }
 
     @Test
+    @Ignore
     public void testDelete(){}
 
 }
