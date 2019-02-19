@@ -26,8 +26,16 @@ the goal of the project is :
 
  more in the trello [here](https://trello.com/b/AjUTBUOB)
  
- Beginning of the project : 11-15-2018
- End of the project :       01-15-2019
+ <table>
+    <tr>
+        <th>Beginning of the project</th>
+        <td>11-15-2018</td>
+    </tr>
+    <tr>
+        <th>End of the project</th>
+        <td>01-15-2019</td>
+    </tr>
+</table>
  
  ## Guide Line
 When you work, you have to work aon a branch which will be `user_activity`
