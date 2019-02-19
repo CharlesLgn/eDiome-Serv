@@ -15,11 +15,10 @@ the goal of the project is :
  - way to speak : 
     * text
     * images
-    * document (**Nice To Have**)
-    * voice    (**Nice To Have**)
+    * document
+    * sound File
  - create text channel
- - create voice channel (**Nice To Have**)
-
+ 
 [![Sprint 1](https://img.shields.io/badge/eDiome-Sprint%201-brightgreen.svg)](https://trello.com/b/PkO7KebO/ediome-sprint-1)
 [![Sprint 2](https://img.shields.io/badge/eDiome-Sprint%202-brightgreen.svg)](https://trello.com/b/YNmwezgZ/ediome-sprint-2)
 [![Sprint 3](https://img.shields.io/badge/eDiome-Sprint%203-brightgreen.svg)](https://trello.com/b/C4NDcPDr/ediome-sprint-3)
@@ -27,7 +26,8 @@ the goal of the project is :
 
  more in the trello [here](https://trello.com/b/AjUTBUOB)
  
- the end of the project is in 3 months
+ Beginning of the project : 11-15-2018
+ End of the project :       01-15-2019
  
  ## Guide Line
 When you work, you have to work aon a branch which will be `user_activity`
