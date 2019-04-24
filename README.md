@@ -59,3 +59,7 @@ When you commit, you have to folow this form : `[type_commit] description`
  For instance, if you have **corrected a bug** which hapen when you **send messages** you can write : `[fix] message send`
  
  If your next commit is on the same task let's do : `git commit --amend --no-edit`
+
+Grades  :  
+Technical :    ![garde](https://img.shields.io/badge/17-20-00BB00.svg)
+Management :   ![grade](https://img.shields.io/badge/0-20-00BB00.svg)
