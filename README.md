@@ -63,4 +63,4 @@ When you commit, you have to folow this form : `[type_commit] description`
 Grades  :  
 
 Technical :    ![garde](https://img.shields.io/badge/17-20-00BB00.svg)  
-Management :   ![grade](https://img.shields.io/badge/0-20-00BB00.svg)
+Management :   ![grade](https://img.shields.io/badge/15-20-00BB00.svg)
